@@ -53,6 +53,16 @@ Built with zero external CSS/UI frameworks, an inline Web Audio synthesizer, an 
   - **LEGAL**: Links for *Terms of mild chaos*, *Privacy (we know your cart)*, *Returns within 30 days*, and *Cookie policy (chocolate, 70%)*.
 - **Footer Credentials**: Hackathon metadata, reduced motion indicators, and local persistence status.
 
+### 5. Persistent Navbar Login & Password Strength Paradox Engine
+- **Fixed Navbar Placement**: Sleek `#navbar-login-btn` anchored directly to the left of the Cart widget in the top navigation bar. Explicitly isolated from physics translations and screen filters.
+- **Hero Palette Integration**: Built using the exact visual identity of the Hero Section (`#ffffff` paper card, `#0f172a` navy typography, `#ff6248` coral submit button, `#ffd5ce` stage pills, and `Fraunces` heading typography).
+- **Background Interaction Freezing**: Launching the modal automatically pauses background canvas rendering and pointer down explosion listeners.
+- **Live Reactive Hurdle Validation (`#password-criteria-list`)**:
+  - **Stage 1 (Quantum Primitives)**: Must contain the atomic weight of a noble gas (e.g., Helium `4` / `4.0026`, Neon `20` / `20.18`, etc.) and a valid chess move in algebraic notation (`Nf3`, `e4`, `O-O`, etc.).
+  - **Stage 2 (Dynastic Chronology)**: Triggers once Stage 1 matches. Must include the middle name of a minor 17th-century European monarch (`Amadeus`, `Casimir`, `Sigismund`, `Leopold`, etc.) and at least two historical years between 1400 and 1650 (`1453`, `1648`, etc.).
+  - **Stage 3 (Syntactic Paradox)**: Triggers once Stage 2 matches. Must contain a valid string of HTML code rendering a tiny uncheckable checkbox (`<input type="checkbox" disabled>`) with a live inline rendered preview.
+- **The Rejection Trap**: When all structural criteria are simultaneously satisfied and "Create Secure Account" is submitted, the form intercepts submission, flashes a warning that the password is *"dangerously intelligent"*, and wipes the input field back to scratch.
+
 ---
 
 ## Storefront Inventory
