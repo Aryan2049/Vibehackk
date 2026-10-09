@@ -1,26 +1,3311 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Oops!Mart. You shop. We make it worse. A polished storefront where every product misbehaves."
-    />
-    <title>Oops!Mart | You shop. We make it worse.</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9B%92%3C/text%3E%3C/svg%3E"
-    />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oops!Mart | The biggest sale that shouldn't exist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --cream: #fff8ed;
+      --cream-deep: #f7ead6;
+      --paper: #ffffff;
+      --white: #ffffff;
+      --ink: #1b1b22;
+      --navy: #17243d;
+      --navy-2: #27365a;
+      --navy-3: #3c4f7e;
+      --coral: #ff6248;
+      --coral-2: #e8431f;
+      --coral-ink: #c9351a;
+      --coral-soft: #ffdcd4;
+      --teal: #109c8e;
+      --teal-2: #0b7a6f;
+      --teal-soft: #d9f2ee;
+      --yellow: #ffd65a;
+      --amber: #ffd65a;
+      --amber-soft: #fff0c2;
+      --mint: #ddf3e4;
+      --rose: #ff9a86;
+      --grey: #636b7e;
+      --grey-2: #8d96a9;
+      --line: #eadfcb;
+      --line-2: #efe8dc;
+
+      --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+      --font-body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+      --shadow-sm: 0 1px 3px rgba(23, 36, 61, 0.08), 0 2px 6px rgba(23, 36, 61, 0.04);
+      --shadow: 0 8px 24px -10px rgba(23, 36, 61, 0.22), 0 2px 6px rgba(23, 36, 61, 0.06);
+      --shadow-lg: 0 24px 50px -18px rgba(23, 36, 61, 0.35);
+
+      --r-sm: 9px;
+      --r: 13px;
+      --r-lg: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--cream);
+      background-image: radial-gradient(circle at 12% -10%, #fff6e2 0%, transparent 55%),
+        radial-gradient(circle at 92% 4%, #ffe6dd 0%, transparent 45%);
+      background-attachment: fixed;
+      color: var(--ink);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .wrap {
+      width: min(1200px, 100% - 44px);
+      margin-inline: auto;
+    }
+
+    /* =========================================================
+       1. TOP ANNOUNCEMENT STRIP
+       ========================================================= */
+    .strip {
+      background: var(--cream-deep);
+      border-bottom: 1px solid var(--line);
+      padding: 7px 0;
+      text-align: center;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      color: var(--navy-2);
+    }
+
+    .strip__line {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .strip__dot {
+      color: var(--coral);
+      font-size: 14px;
+    }
+
+    /* =========================================================
+       2. NAVIGATION BAR
+       ========================================================= */
+    .nav {
+      padding: 16px 0 10px;
+      position: sticky;
+      top: 0;
+      background: rgba(255, 248, 237, 0.94);
+      backdrop-filter: blur(14px);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(234, 223, 203, 0.5);
+    }
+
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .brand__mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: var(--coral);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(255, 98, 72, 0.35);
+      transform: rotate(-4deg);
+    }
+
+    .brand__name {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 26px;
+      color: var(--navy);
+      line-height: 1;
+      display: block;
+    }
+
+    .brand__tag {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--coral-ink);
+      margin-top: 3px;
+    }
+
+    .nav__links {
+      display: flex;
+      gap: 6px;
+      margin-left: 12px;
+    }
+
+    .nav__link {
+      background: none;
+      border: 0;
+      padding: 8px 14px;
+      border-radius: var(--r-sm);
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--navy-2);
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+    }
+
+    .nav__link:hover {
+      background: var(--cream-deep);
+      color: var(--navy);
+    }
+
+    .nav__actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .iconbtn {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--r-sm);
+      border: 1px solid var(--line);
+      background: var(--paper);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      color: var(--navy);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s, border-color 0.15s;
+    }
+
+    .iconbtn:hover {
+      transform: translateY(-2px);
+      border-color: var(--navy-3);
+    }
+
+    .cartbtn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid var(--navy);
+      background: var(--navy);
+      color: #fff;
+      border-radius: var(--r-sm);
+      padding: 10px 18px;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(23, 36, 61, 0.25);
+      transition: transform 0.15s, background 0.15s;
+    }
+
+    .cartbtn:hover {
+      background: var(--navy-2);
+      transform: translateY(-2px);
+    }
+
+    .cartbtn__count {
+      background: var(--coral);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 2px 7px;
+      border-radius: 10px;
+    }
+
+    /* Search Bar Row */
+    .nav__row2 {
+      margin-top: 14px;
+    }
+
+    .search__form {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: var(--paper);
+      border: 1.5px solid var(--line);
+      border-radius: var(--r);
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search__form:focus-within {
+      border-color: var(--coral);
+      box-shadow: 0 0 0 3px rgba(255, 98, 72, 0.18);
+    }
+
+    .search__icon {
+      margin-left: 14px;
+      font-size: 15px;
+      color: var(--grey);
+    }
+
+    .search__input {
+      flex: 1;
+      border: 0;
+      background: transparent;
+      padding: 13px 14px;
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--navy);
+      outline: none;
+    }
+
+    .search__input::placeholder {
+      color: var(--grey-2);
+    }
+
+    .search__btn {
+      background: var(--coral);
+      color: #fff;
+      border: none;
+      padding: 9px 20px;
+      margin-right: 6px;
+      border-radius: 9px;
+      font-weight: 800;
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.15s;
+    }
+
+    .search__btn:hover {
+      background: var(--coral-2);
+      transform: scale(1.02);
+    }
+
+    /* =========================================================
+       3. HERO SECTION (Exact Reference Reproduction)
+       ========================================================= */
+    .hero-section {
+      padding: 44px 0 60px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.18fr 0.82fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(42px, 5.2vw, 68px);
+      font-weight: 900;
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+      margin: 0;
+    }
+
+    .hero__title .hl {
+      color: var(--coral);
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero__title .hl::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 6px;
+      height: 12px;
+      background: var(--yellow);
+      opacity: 0.55;
+      border-radius: 4px;
+      z-index: -1;
+    }
+
+    .hero__sub {
+      font-size: 16.5px;
+      color: var(--navy-2);
+      line-height: 1.6;
+      margin-top: 18px;
+      max-width: 48ch;
+    }
+
+    .hero__cta {
+      display: flex;
+      gap: 14px;
+      margin-top: 26px;
+      flex-wrap: wrap;
+    }
+
+    .btn--primary {
+      background: var(--coral);
+      color: #fff;
+      border: none;
+      border-radius: 11px;
+      padding: 13px 24px;
+      font-weight: 800;
+      font-size: 14.5px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(255, 98, 72, 0.35);
+      transition: transform 0.15s, background 0.15s;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn--primary:hover {
+      background: var(--coral-2);
+      transform: translateY(-2px);
+    }
+
+    .btn--navy {
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 11px;
+      padding: 13px 22px;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s, background 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn--navy:hover {
+      background: var(--navy-2);
+      transform: translateY(-2px);
+    }
+
+    /* Two Status Cards */
+    .hero__panel {
+      display: flex;
+      gap: 16px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .countdown {
+      background: var(--navy);
+      color: #fff;
+      border-radius: var(--r);
+      padding: 14px 20px;
+      box-shadow: var(--shadow);
+      min-width: 200px;
+    }
+
+    .countdown__label {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #b9c6e6;
+      font-weight: 800;
+    }
+
+    .countdown__value {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      font-variant-numeric: tabular-nums;
+      color: var(--yellow);
+      margin: 2px 0;
+    }
+
+    .countdown__note {
+      font-size: 11px;
+      color: #cfd8f0;
+    }
+
+    .health {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: var(--shadow-sm);
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .health__dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--teal);
+      flex-shrink: 0;
+      animation: pulse-dot 2.5s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(16, 156, 142, 0.5); }
+      50% { box-shadow: 0 0 0 6px rgba(16, 156, 142, 0); }
+    }
+
+    .health__label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      font-weight: 800;
+    }
+
+    .health__text {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-top: 2px;
+    }
+
+    /* Stats Row */
+    .hero__stats {
+      display: flex;
+      gap: 32px;
+      margin-top: 26px;
+      flex-wrap: wrap;
+    }
+
+    .stat__num {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1;
+    }
+
+    .stat__label {
+      font-size: 11.5px;
+      color: var(--grey);
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    /* Hero Art Card (Right Column) */
+    .hero__art-container {
+      position: relative;
+      border-radius: 24px;
+      background: linear-gradient(160deg, #fffaf2, #ffebe3 60%, #e2f4ed);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-lg);
+      padding: 30px;
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero__svg {
+      width: 82%;
+      max-width: 290px;
+      height: auto;
+      animation: hero-float 6s ease-in-out infinite;
+    }
+
+    @keyframes hero-float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(-1deg); }
+    }
+
+    /* Floating Badges & Stickers on Hero Art */
+    .hero__sticker {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      width: 108px;
+      height: 108px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: var(--yellow);
+      color: var(--navy);
+      border: 3px solid var(--navy);
+      border-radius: 50%;
+      transform: rotate(-10deg);
+      box-shadow: 0 8px 20px rgba(23, 36, 61, 0.2);
+      animation: sticker-wobble 5s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    .hero__sticker b {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .hero__sticker small {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    @keyframes sticker-wobble {
+      0%, 100% { transform: rotate(-10deg) scale(1); }
+      50% { transform: rotate(-4deg) scale(1.05); }
+    }
+
+    .hero__tag-chip {
+      position: absolute;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--r-sm);
+      padding: 7px 12px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--navy);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      z-index: 2;
+    }
+
+    .hero__tag-chip s {
+      color: var(--grey-2);
+      font-weight: 600;
+    }
+
+    .hero__tag-chip em {
+      font-style: normal;
+      color: var(--coral-ink);
+    }
+
+    .tag-top-left { top: 22px; left: 18px; }
+    .tag-mid-left { top: 96px; left: 14px; }
+    .tag-mid-right { bottom: 105px; right: 14px; }
+    .tag-bottom-left { bottom: 68px; left: 18px; }
+    .tag-bottom-right { bottom: 20px; right: 28px; }
+
+    /* Bottom-Left Floating Chaos Overlay Widget */
+    .chaos-hud-widget {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      padding: 12px 16px;
+      box-shadow: var(--shadow);
+      z-index: 999;
+      max-width: 240px;
+    }
+
+    .hud-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+
+    .hud-percentage {
+      color: var(--coral);
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .hud-bar {
+      height: 6px;
+      background: var(--line-2);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 8px 0 6px;
+    }
+
+    .hud-bar__fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--teal), var(--yellow), var(--coral));
+      width: 0%;
+      transition: width 0.3s;
+    }
+
+    .hud-note {
+      font-size: 10px;
+      color: var(--grey);
+      line-height: 1.35;
+      margin: 0;
+    }
+
+    /* Bottom-Right Demo Mode Button */
+    .demo-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--navy);
+      color: #fff;
+      border: 1px solid var(--navy-2);
+      border-radius: var(--r-sm);
+      padding: 10px 18px;
+      font-size: 11.5px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      z-index: 999;
+      transition: transform 0.15s, background 0.15s;
+    }
+
+    .demo-btn:hover {
+      background: var(--navy-2);
+      transform: translateY(-2px);
+    }
+
+    /* =========================================================
+       4. PRODUCTS SECTION (Below the Hero Section)
+       ========================================================= */
+    #shop-section {
+      padding: 50px 0 80px;
+      border-top: 1px solid var(--line);
+      background: var(--cream);
+      position: relative;
+    }
+
+    .section-head {
+      margin-bottom: 24px;
+    }
+
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--amber-soft);
+      color: #7a4c00;
+      border: 1px solid #f0d089;
+      border-radius: var(--r-sm);
+      padding: 5px 10px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3.4vw, 38px);
+      font-weight: 900;
+      color: var(--navy);
+      margin: 0 0 6px 0;
+      line-height: 1.1;
+    }
+
+    .section-desc {
+      font-size: 14.5px;
+      color: var(--grey);
+      margin: 0;
+    }
+
+    /* Filter tabs above stage */
+    .chips-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .chip-btn {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      border-radius: var(--r-sm);
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--navy-2);
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chip-btn:hover {
+      border-color: var(--navy);
+      transform: translateY(-1px);
+    }
+
+    .chip-btn.active {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: #fff;
+    }
+
+    .chip-count {
+      font-size: 10px;
+      opacity: 0.7;
+    }
+
+    /* =========================================================
+       5. CHAOS SANDBOX STAGE CONTAINER (Floor Below Section Head)
+       ========================================================= */
+    #chaos-sandbox-stage {
+      position: relative;
+      width: 100%;
+      height: 800px;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      margin-top: 24px;
+      overflow: hidden;
+    }
+
+    #space-canvas {
+      display: none;
+    }
+
+    #stage-status-banner {
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--paper);
+      border: 1px solid var(--line);
+      color: var(--navy);
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 7px 22px;
+      border-radius: 999px;
+      pointer-events: none;
+      z-index: 15;
+      letter-spacing: 0.02em;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.4s ease-out;
+      white-space: nowrap;
+    }
+
+    /* Floating Physics Entities inside Sub-stage */
+    .physics-entity {
+      position: absolute;
+      transform-origin: center center;
+      will-change: transform;
+      cursor: grab;
+      touch-action: none;
+      z-index: 20;
+    }
+
+    .physics-entity:active {
+      cursor: grabbing;
+    }
+
+    /* Product Cards inside Sub-stage - Matching Hero Theme */
+    .shopbomb-card {
+      width: 254px;
+      height: 226px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      padding: 13px 15px;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.03);
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      transform: rotate(0deg);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: var(--navy);
+    }
+
+    .shopbomb-card:hover {
+      border-color: var(--coral);
+      box-shadow: 0 10px 24px rgba(255, 98, 72, 0.16), 0 2px 6px rgba(15, 23, 42, 0.04);
+    }
+
+    .shopbomb-card.card-detached {
+      border-color: var(--coral) !important;
+      box-shadow: 0 12px 32px rgba(255, 98, 72, 0.35) !important;
+    }
+
+    .card-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 7px;
+    }
+
+    .card-cat-badge {
+      display: inline-block;
+      font-size: 8.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--navy-2);
+      background: #f1f5f9;
+      padding: 3px 7px;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+    }
+
+    .card-art {
+      width: 100%;
+      height: 74px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      margin-bottom: 7px;
+      position: relative;
+      overflow: hidden;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+    }
+
+    .card-wipe-badge {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      font-size: 8px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 5px;
+      background: var(--navy);
+      color: #fff;
+      letter-spacing: 0.05em;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 800;
+      margin: 0 0 3px 0;
+      color: var(--navy);
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-family: var(--font-body);
+    }
+
+    .card-blurb {
+      font-size: 11px;
+      color: var(--grey);
+      margin: 0 0 6px 0;
+      line-height: 1.35;
+      height: 28px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .card-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      padding-top: 7px;
+      border-top: 1px solid var(--line);
+    }
+
+    .price-box {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+    }
+
+    .card-price {
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--navy);
+    }
+
+    .card-old-price {
+      font-size: 11px;
+      color: var(--grey);
+      text-decoration: line-through;
+      font-weight: 600;
+    }
+
+    .card-weight {
+      font-size: 8.5px;
+      color: #d94830;
+      background: #fff1ee;
+      border: 1px solid #ffd5ce;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .btn-add {
+      background: var(--coral);
+      border: none;
+      color: white;
+      font-weight: 800;
+      font-size: 11px;
+      padding: 7px 13px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(255, 98, 72, 0.3);
+      transition: transform 0.15s, background 0.15s;
+      white-space: nowrap;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-add:hover {
+      transform: scale(1.05);
+      background: var(--coral-dark);
+    }
+
+    /* The Escaping Checkout Bubble */
+    #checkout-bubble {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ff7d68, #ff6248 65%, #d93d25);
+      box-shadow: 0 8px 24px rgba(255, 98, 72, 0.4), 0 0 0 3px #ffffff, 0 0 0 5px var(--coral);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 900;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      z-index: 500;
+      animation: checkout-pulse 1.8s infinite alternate ease-in-out;
+      text-align: center;
+    }
+
+    #checkout-bubble .sub {
+      font-size: 7.5px;
+      opacity: 0.9;
+      font-weight: 700;
+    }
+
+    @keyframes checkout-pulse {
+      from { transform: scale(1) rotate(0deg); }
+      to { transform: scale(1.08) rotate(5deg); }
+    }
+
+    /* =========================================================
+       6. FULLSCREEN OVERLAYS & TORTURE MODALS
+       ========================================================= */
+    #screen-wash-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 999999;
+      display: none;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .fluid-layer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 0%;
+      transition: height 1s cubic-bezier(0.77, 0, 0.175, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .fluid-spill-text {
+      font-size: 34px;
+      font-weight: 900;
+      color: #111;
+      text-shadow: 0 0 20px rgba(255,255,255,0.8);
+      text-transform: uppercase;
+      opacity: 0;
+      animation: drip-text 0.6s forwards;
+      letter-spacing: -0.02em;
+      text-align: center;
+      padding: 20px;
+    }
+
+    @keyframes drip-text {
+      0% { opacity: 0; transform: translateY(-40px) scale(0.9); }
+      100% { opacity: 1; transform: translateY(0px) scale(1); }
+    }
+
+    .dry-run-box {
+      font-size: 30px;
+      font-weight: 900;
+      color: #4a5568;
+      background: #cbd5e0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .dry-run-box .faint-msg {
+      font-size: 17px;
+      font-weight: 600;
+      color: #718096;
+      margin-top: 14px;
+      letter-spacing: 0.05em;
+    }
+
+    .cascade-flake {
+      position: absolute;
+      top: 0;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      border-radius: 10px;
+      animation: cascade-drop 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    @keyframes cascade-drop {
+      0% { transform: translateY(-100vh) rotate(0deg); opacity: 0; }
+      15% { opacity: 1; }
+      100% { transform: translateY(125vh) rotate(720deg); opacity: 1; }
+    }
+
+    .cascade-alert {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #ff0044;
+      color: white;
+      font-size: 26px;
+      font-weight: 900;
+      padding: 22px 38px;
+      border-radius: 18px;
+      box-shadow: 0 0 50px #ff0044;
+      border: 4px solid #fff;
+      animation: alert-flash 0.3s infinite alternate;
+      text-align: center;
+      z-index: 10000;
+    }
+
+    @keyframes alert-flash {
+      from { transform: translate(-50%, -50%) scale(1); }
+      to { transform: translate(-50%, -50%) scale(1.08); filter: invert(1); }
+    }
+
+    .shatter-fragment {
+      position: absolute;
+      font-weight: 900;
+      color: #fff;
+      white-space: nowrap;
+      text-shadow: 0 0 25px cyan, 0 0 50px magenta;
+      pointer-events: none;
+      animation: fragment-fade 1.8s ease-out forwards;
+    }
+
+    @keyframes fragment-fade {
+      0% { transform: scale(0.4) rotate(0deg); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: scale(2.2) rotate(45deg); opacity: 0; }
+    }
+
+    @keyframes violent-screen-shake {
+      0% { transform: translate(3px, 2px) rotate(0deg); }
+      20% { transform: translate(-4px, -3px) rotate(-1.5deg); }
+      40% { transform: translate(-5px, 1px) rotate(1.5deg); }
+      60% { transform: translate(4px, 3px) rotate(0deg); }
+      80% { transform: translate(2px, -2px) rotate(1deg); }
+      100% { transform: translate(-2px, 3px) rotate(-1deg); }
+    }
+
+    @keyframes icy-crimson-strobe {
+      0%, 100% { color: #00f0ff !important; text-shadow: 0 0 14px #00f0ff !important; }
+      50% { color: #ff1744 !important; text-shadow: 0 0 14px #ff1744 !important; }
+    }
+
+    .spicy-ice-active {
+      animation: violent-screen-shake 0.08s infinite alternate !important;
+    }
+
+    .spicy-ice-active * {
+      animation: icy-crimson-strobe 0.12s infinite alternate !important;
+    }
+
+    .bubble-wrap-grid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
+      gap: 12px;
+      padding: 16px;
+      background: rgba(226, 232, 240, 0.45);
+      backdrop-filter: blur(6px);
+      pointer-events: auto;
+      z-index: 10000;
+    }
+
+    .bubble-cell {
+      height: 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(200,225,255,0.2) 60%, rgba(100,150,255,0.4));
+      border: 2px solid rgba(255,255,255,0.65);
+      box-shadow: inset 0 2px 5px rgba(255,255,255,0.9), 0 4px 10px rgba(0,0,0,0.25);
+      cursor: pointer;
+      transition: transform 0.1s, opacity 0.2s;
+    }
+
+    .bubble-cell.popped {
+      transform: scale(0.2);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .pinhole-vignette {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at center, transparent 75px, rgba(10, 16, 30, 0.99) 175px);
+      pointer-events: none;
+      z-index: 999998;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pinhole-label {
+      color: #64748b;
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 220px;
+      text-align: center;
+    }
+
+    .invisible-text-mode, .invisible-text-mode * {
+      color: transparent !important;
+      text-shadow: none !important;
+      border-color: rgba(255, 255, 255, 0.05) !important;
+    }
+
+    .torture-modal-scrim {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(14px);
+      z-index: 50000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .torture-window {
+      background: #0d1629;
+      border: 2px solid #ff2a85;
+      box-shadow: 0 0 60px rgba(255, 42, 133, 0.5);
+      border-radius: 20px;
+      width: min(540px, 92vw);
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 28px;
+      color: #fff;
+      position: relative;
+    }
+
+    .torture-window h2 {
+      margin-top: 0;
+      font-size: 24px;
+      font-weight: 900;
+      color: #ffd000;
+      font-family: var(--font-display);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: #cfd8f0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1.5px solid rgba(255, 255, 255, 0.18);
+      padding: 12px 14px;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      outline: none;
+    }
+
+    .form-input:focus {
+      border-color: #00f0ff;
+      box-shadow: 0 0 14px rgba(0, 240, 255, 0.3);
+    }
+
+    #virtual-keyboard {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+      background: rgba(0,0,0,0.5);
+      padding: 12px;
+      border-radius: 12px;
+    }
+
+    .vk-key {
+      background: #1c2b4a;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 18px;
+      font-weight: 900;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .vk-key:hover {
+      background: #ff2a85;
+    }
+
+    .phone-range-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .phone-range-display {
+      font-family: monospace;
+      font-size: 19px;
+      font-weight: 900;
+      color: #00f0ff;
+      background: rgba(0, 240, 255, 0.1);
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #00f0ff;
+      letter-spacing: 0.1em;
+      text-align: center;
+    }
+
+    .range-slider {
+      width: 100%;
+      height: 10px;
+      accent-color: #ff2a85;
+      cursor: pointer;
+    }
+
+    .paradox-box {
+      background: rgba(255, 71, 87, 0.1);
+      border: 1.5px dashed #ff4757;
+      padding: 14px;
+      border-radius: 12px;
+      margin: 20px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 12px;
+      line-height: 1.45;
+      color: #ffccd0;
+      font-weight: 600;
+    }
+
+    .paradox-box input {
+      margin-top: 3px;
+      transform: scale(1.3);
+    }
+
+    .submit-btn-real, .submit-btn-decoy {
+      width: 100%;
+      background: linear-gradient(135deg, #00ff66, #00b846);
+      color: #032b10;
+      font-size: 16px;
+      font-weight: 900;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .floating-decoy-btn {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00ff66, #00b846);
+      border: 3px solid #fff;
+      color: #032b10;
+      font-size: 11px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 0 25px #00ff66;
+      z-index: 60000;
+      text-transform: uppercase;
+    }
+
+    .captcha-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .captcha-tile {
+      height: 130px;
+      border-radius: 10px;
+      border: 2px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .captcha-tile.selected {
+      border-color: #ffd000;
+    }
+
+    .captcha-tile.selected::after {
+      content: "✓";
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #ffd000;
+      color: #000;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .captcha-err {
+      color: #ff4757;
+      font-size: 12.5px;
+      font-weight: 800;
+      margin: 10px 0;
+      min-height: 20px;
+    }
+
+    .order-success-screen {
+      text-align: center;
+      padding: 30px 10px;
+    }
+
+    .order-success-screen h1 {
+      font-size: 32px;
+      color: #00ff66;
+      margin-bottom: 10px;
+      font-family: var(--font-display);
+    }
+
+    /* =========================================================
+       SUPPORT SECTION ("Support that will not support you")
+       ========================================================= */
+    .support-section {
+      padding: 90px 0 110px;
+      background: var(--cream);
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid var(--line);
+    }
+
+    .support-decor-bag-1 {
+      position: absolute;
+      top: 30px;
+      right: 5%;
+      opacity: 0.35;
+      pointer-events: none;
+      animation: hero-float 7s ease-in-out infinite;
+    }
+
+    .support-decor-bag-2 {
+      position: absolute;
+      bottom: 25px;
+      right: 2%;
+      opacity: 0.3;
+      pointer-events: none;
+      animation: hero-float 8s ease-in-out infinite 1.5s;
+    }
+
+    .support-head {
+      max-width: 820px;
+      margin-bottom: 36px;
+    }
+
+    .support-title {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 3.8vw, 42px);
+      font-weight: 900;
+      color: var(--navy);
+      margin: 0 0 14px 0;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    .support-desc {
+      font-size: 15px;
+      color: var(--grey);
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .support-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .support-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .support-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      padding: 30px 26px;
+      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .support-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--coral);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+    }
+
+    .support-icon-wrap {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #e2f5ee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .support-card-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--navy);
+      margin: 0 0 8px 0;
+      font-family: var(--font-body);
+    }
+
+    .support-card-text {
+      font-size: 13.5px;
+      color: var(--grey);
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    /* =========================================================
+       SITE FOOTER
+       ========================================================= */
+    .site-footer {
+      background: #0b1329;
+      color: #94a3b8;
+      padding: 80px 0 45px;
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .footer-star-sticker {
+      position: absolute;
+      right: 25%;
+      top: 40px;
+      font-size: 18px;
+      color: #ffd65a;
+      opacity: 0.85;
+      pointer-events: none;
+      animation: float-sticker 4s ease-in-out infinite;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2.2fr 1fr 1.2fr 1.2fr;
+      gap: 40px;
+    }
+
+    @media (max-width: 900px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 900;
+      color: #ffffff;
+      margin: 0 0 16px 0;
+      letter-spacing: -0.01em;
+    }
+
+    .footer-bio {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #94a3b8;
+      margin: 0 0 14px 0;
+      max-width: 380px;
+    }
+
+    .footer-disclaimer {
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: #64748b;
+      margin: 0;
+      max-width: 380px;
+    }
+
+    .footer-col-title {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin: 0 0 18px 0;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .footer-links li a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 13.5px;
+      transition: color 0.15s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .footer-links li a:hover {
+      color: #ffffff;
+      transform: translateX(2px);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin-top: 55px;
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #64748b;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+  <!-- =========================================================
+       1. TOP ANNOUNCEMENT STRIP
+       ========================================================= -->
+  <div class="strip">
+    <div class="wrap">
+      <div class="strip__line" id="strip-ticker">
+        <span class="strip__dot">●</span>
+        <span id="strip-text">Everything on this page has been approved by nobody.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       2. MAIN NAVBAR & SEARCH
+       ========================================================= -->
+  <header class="nav">
+    <div class="wrap">
+      <div class="nav__inner">
+        <!-- Logo -->
+        <a class="brand" href="#" onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;">
+          <div class="brand__mark">!</div>
+          <div>
+            <span class="brand__name">Oops!Mart</span>
+            <span class="brand__tag">You shop. We make it worse.</span>
+          </div>
+        </a>
+
+        <!-- Section Navigation Links -->
+        <nav class="nav__links">
+          <button class="nav__link" type="button" onclick="scrollToSection('shop-section')">Shop</button>
+          <button class="nav__link" type="button" onclick="scrollToSection('hero-anchor')">Our promise</button>
+          <button class="nav__link" type="button" onclick="scrollToSection('support-section')">Support</button>
+        </nav>
+
+        <!-- Actions: Mute & Cart -->
+        <div class="nav__actions">
+          <button class="iconbtn" type="button" id="btn-sound-toggle" title="Toggle sound effects">
+            <span id="sound-icon">🔊</span>
+          </button>
+          <button class="cartbtn" type="button" onclick="openCheckoutModal()">
+            <span>🛒</span> Cart
+            <span class="cartbtn__count" id="cart-count">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Search Input Row -->
+      <div class="nav__row2">
+        <div class="search__form">
+          <span class="search__icon">🔎</span>
+          <input
+            type="search"
+            class="search__input"
+            id="search-input"
+            placeholder="Search milk, shoes, a phone, anything you will regret"
+            autocomplete="off"
+          />
+          <button type="button" class="search__btn" onclick="executeSearch()">Search</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       3. HERO SECTION (Exact Reference Reproduction)
+       ========================================================= -->
+  <main class="hero-section" id="hero-anchor">
+    <div class="wrap">
+      <div class="hero-grid">
+        <!-- Left Column: Copy, CTA, Countdown, Stats -->
+        <div>
+          <h1 class="hero__title">
+            THE BIGGEST<br />
+            SALE THAT<br />
+            <span class="hl">SHOULDN'T EXIST.</span>
+          </h1>
+
+          <p class="hero__sub">
+            Unbelievable prices. Questionable decisions. A checkout experience your therapist may hear about. And behind
+            all of it, a cart that adds up perfectly every single time.
+          </p>
+
+          <div class="hero__cta">
+            <button type="button" class="btn--primary" onclick="scrollToSection('shop-section')">
+              SHOP THE CHAOS
+            </button>
+            <button type="button" class="btn--navy" onclick="triggerMilkSpill()">
+              <span>🥛</span> See the milk spill
+            </button>
+          </div>
+
+          <!-- Dual Status Cards -->
+          <div class="hero__panel">
+            <div class="countdown">
+              <div class="countdown__label">Sale ends in</div>
+              <div class="countdown__value" id="hero-countdown-clock">10:44:44</div>
+              <div class="countdown__note">Our clock. The clock is a team player.</div>
+            </div>
+
+            <div class="health">
+              <span class="health__dot"></span>
+              <div>
+                <span class="health__label">System status</span>
+                <span class="health__text" id="health-status-text">All systems nominally nominal.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stats Row -->
+          <div class="hero__stats">
+            <div>
+              <div class="stat__num">28</div>
+              <div class="stat__label">Products, all misbehaving</div>
+            </div>
+            <div>
+              <div class="stat__num">28</div>
+              <div class="stat__label">Unique reactions</div>
+            </div>
+            <div>
+              <div class="stat__num">100%</div>
+              <div class="stat__label">Working cart, honestly</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Illustrated Floating Art Card -->
+        <div class="hero__art-container">
+          <!-- Central Shopping Bag & Tipping Milk SVG Illustration -->
+          <svg class="hero__svg" viewBox="0 0 240 220" role="img" aria-label="Shopping bag with tipping milk carton">
+            <ellipse cx="120" cy="200" rx="86" ry="14" fill="#16213f" opacity="0.12" />
+            <path d="M54 78 h132 l14 100 a10 10 0 0 1 -10 12 H50 a10 10 0 0 1 -10 -12 Z" fill="#ff5a3c" stroke="#16213f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M54 78 h132" stroke="#c9351a" stroke-width="4" />
+            <path d="M92 78 q28 -30 56 0" fill="none" stroke="#16213f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="120" cy="140" r="22" fill="#fff8ea" />
+            <text x="120" y="149" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="26" font-weight="900" fill="#16213f">
+              !
+            </text>
+            <g transform="rotate(24 190 60)">
+              <path d="M172 40 L190 20 L208 40 V92 a6 6 0 0 1 -6 6 H178 a6 6 0 0 1 -6 -6 Z" fill="#ffffff" stroke="#16213f" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M172 40 H208" stroke="#16213f" stroke-width="3.5" />
+              <rect x="178" y="56" width="24" height="24" rx="3" fill="#109c8e" />
+            </g>
+            <circle cx="44" cy="52" r="6" fill="#ffb020" />
+            <circle cx="212" cy="120" r="5" fill="#109c8e" />
+            <path d="M28 108 q8 -8 16 0" stroke="#ffb020" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+
+          <!-- Circular -400% Sticker -->
+          <div class="hero__sticker">
+            <b>-400%</b>
+            <small>off everything</small>
+          </div>
+
+          <!-- Floating Badges & Price Tags matching reference -->
+          <div class="hero__tag-chip tag-top-left">
+            <span>🛒</span> Cart never breaks
+          </div>
+
+          <div class="hero__tag-chip tag-mid-left">
+            <s>$19.99</s> <em>$4.00</em>
+          </div>
+
+          <div class="hero__tag-chip tag-bottom-left">
+            <span>🎬</span> 28 animations
+          </div>
+
+          <div class="hero__tag-chip tag-mid-right">
+            <s>$412.00</s> <em>$129.00</em>
+          </div>
+
+          <div class="hero__tag-chip tag-bottom-right">
+            <span>💬</span> Reviews are parody
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom-Left Floating Chaos Overlay Widget -->
+  <div class="chaos-hud-widget">
+    <div class="hud-header">
+      <span>Chaos Level</span>
+      <span class="hud-percentage" id="chaos-pct-badge">0%</span>
+    </div>
+    <div class="hud-bar">
+      <div class="hud-bar__fill" id="chaos-pct-fill"></div>
+    </div>
+    <p class="hud-note" id="chaos-quip-text">
+      0 of 28 reactions discovered. Nothing has gone wrong yet. Statistically suspicious.
+    </p>
+  </div>
+
+  <!-- Bottom-Right Floating Demo Mode Button -->
+  <button type="button" class="demo-btn" onclick="alert('DEMO MODE: Ready. Scroll down to shop or trigger any misbehaving product!')">
+    DEMO MODE
+  </button>
+
+  <!-- =========================================================
+       4. PRODUCTS SECTION (After Scrolling)
+       ========================================================= -->
+  <section id="shop-section">
+    <div class="wrap">
+      <!-- Section Header -->
+      <div class="section-head">
+        <span class="section-eyebrow">⚠️ HUMOUR LOADS WITH THE PAGE. NO CLICKING REQUIRED.</span>
+        <h2 class="section-title">The whole catalogue, all of it faulty</h2>
+        <p class="section-desc">Click any illustration to find out what that product does to this page.</p>
+
+        <!-- Category Filter Chips -->
+        <div class="chips-bar">
+          <button type="button" class="chip-btn active" data-category="ALL">
+            <span>🌀 All Products</span>
+            <span class="chip-count">(12)</span>
+          </button>
+          <button type="button" class="chip-btn" data-category="ABSURD GROCERIES & EDIBLES">
+            <span>🥛 Absurd Groceries</span>
+            <span class="chip-count">(4)</span>
+          </button>
+          <button type="button" class="chip-btn" data-category="HOSTILE HOMEWARE & GADGETS">
+            <span>🔦 Hostile Homeware</span>
+            <span class="chip-count">(4)</span>
+          </button>
+          <button type="button" class="chip-btn" data-category="EXISTENTIAL FASHION & APPAREL">
+            <span>👟 Existential Fashion</span>
+            <span class="chip-count">(4)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Isolated Kinetic Stage Floor -->
+      <div id="chaos-sandbox-stage">
+        <!-- Ambient Space Canvas inside Stage -->
+        <canvas id="space-canvas"></canvas>
+
+        <!-- Stage Status Banner -->
+        <div id="stage-status-banner">
+          ✨ PRISTINE ORDER: All 12 items stocked in neat grid. Click any "Add to Cart" to trigger chaos.
+        </div>
+
+        <!-- The Unattainable Escaping Checkout Widget -->
+        <div class="physics-entity" id="checkout-bubble">
+          CHECKOUT
+          <span class="sub">CLICK IF YOU DARE</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       5. SUPPORT SECTION ("Support that will not support you")
+       ========================================================= -->
+  <section id="support-section" class="support-section">
+    <!-- Decorative faint background outline bags from design -->
+    <svg class="support-decor-bag-1" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <path d="M16 10a4 4 0 0 1-8 0"/>
+    </svg>
+    <svg class="support-decor-bag-2" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <path d="M16 10a4 4 0 0 1-8 0"/>
+    </svg>
+
+    <div class="wrap">
+      <div class="support-head">
+        <h2 class="support-title">Support that will not support you</h2>
+        <p class="support-desc">
+          Our support desk is staffed entirely by a script that has been asked to remain calm. It appears on its own once you have been sufficiently chaotic. Keep shopping and see if it shows up.
+        </p>
+      </div>
+
+      <div class="support-cards">
+        <!-- Card 1: Phone support -->
+        <div class="support-card" onclick="alert('📞 Ringing 0800-OOPS...\n\n*heavy exhausted sigh*\n\nLine disconnected. We will text you a single question mark in 4 business days.')">
+          <div class="support-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <rect width="24" height="24" rx="6" fill="#fecdd3"/>
+              <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.4.6 3.6.1.4 0 .8-.2 1l-2.3 2.2z" fill="#e11d48"/>
+            </svg>
+          </div>
+          <h3 class="support-card-title">Phone support</h3>
+          <p class="support-card-text">
+            Ring 0800–OOPS. A recorded message will sigh, then the line will cut out, then it will text you.
+          </p>
+        </div>
+
+        <!-- Card 2: Email support -->
+        <div class="support-card" onclick="alert('✉️ Email Support Desk:\n\nAuto-responder: We received your inquiry and have forwarded it directly to the void. Please anticipate an apology shortly.')">
+          <div class="support-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <rect width="24" height="24" rx="6" fill="#e9d5ff"/>
+              <path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6zm2 0v.5l6 3.75 6-3.75V6H6zm12 2.25l-5.47 3.42a1 1 0 0 1-1.06 0L6 8.25V18h12V8.25z" fill="#a855f7"/>
+            </svg>
+          </div>
+          <h3 class="support-card-title">Email support</h3>
+          <p class="support-card-text">
+            Write to help@oopsmart.example. Replies arrive within 30 days and one apology, usually in that order, occasionally swapped.
+          </p>
+        </div>
+
+        <!-- Card 3: Postal support -->
+        <div class="support-card" onclick="alert('🕳️ Postal Dispatch:\n\nHead office crate update: Currently occupied by a ginger cat named Kevin. Your parcel will be sat on.')">
+          <div class="support-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <rect width="24" height="24" rx="6" fill="#ccfbf1"/>
+              <ellipse cx="12" cy="12" rx="6.5" ry="4" fill="#0f172a"/>
+            </svg>
+          </div>
+          <h3 class="support-card-title">Postal support</h3>
+          <p class="support-card-text">
+            Send a letter to our head office. It is a milk crate behind a laundrette. It is waterproof. Mostly.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       6. SITE FOOTER
+       ========================================================= -->
+  <footer class="site-footer">
+    <div class="footer-star-sticker">★</div>
+    <div class="wrap">
+      <div class="footer-grid">
+        <!-- Col 1: Brand & Description -->
+        <div class="footer-col footer-col--brand">
+          <h3 class="footer-brand">Oops!Mart</h3>
+          <p class="footer-bio">
+            You shop. We make it worse. A hackathon build where twenty eight products each have their own catastrophic animation and the shopping cart still adds up correctly.
+          </p>
+          <p class="footer-disclaimer">
+            Parody project. All reviews, coupons, support staff and order confirmations are fictional on purpose.
+          </p>
+        </div>
+
+        <!-- Col 2: SHOP -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">SHOP</h4>
+          <ul class="footer-links">
+            <li><a href="#shop-section" onclick="filterCategoryFromFooter('Dairy & Drinks'); return false;">Dairy &amp; Drinks</a></li>
+            <li><a href="#shop-section" onclick="filterCategoryFromFooter('Food & Groceries'); return false;">Food &amp; Groceries</a></li>
+            <li><a href="#shop-section" onclick="filterCategoryFromFooter('Electronics'); return false;">Electronics</a></li>
+            <li><a href="#shop-section" onclick="filterCategoryFromFooter('Fashion'); return false;">Fashion</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: COMPANY -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">COMPANY</h4>
+          <ul class="footer-links">
+            <li><a href="#hero-anchor" onclick="scrollToSection('hero-anchor'); return false;">Our promise</a></li>
+            <li><a href="javascript:void(0)" onclick="alert('💼 Careers: You are already doing the job by surviving this storefront.')">Careers (still hiring an animator)</a></li>
+            <li><a href="javascript:void(0)" onclick="alert('🚨 Press: We explicitly warned you not to press it.')">Press (do not press it)</a></li>
+            <li><a href="javascript:void(0)" onclick="alert('📰 Blog: 404 - Domain abandoned in 2019 after a rogue CSS transition escaped.')">Blog (abandoned in 2019)</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: LEGAL -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">LEGAL</h4>
+          <ul class="footer-links">
+            <li><a href="javascript:void(0)" onclick="alert('⚖️ Terms: Gravity is merely a non-binding guideline on this domain.')">Terms of mild chaos</a></li>
+            <li><a href="javascript:void(0)" onclick="alert('🔒 Privacy: We know your cart. We also know you hesitated on the Sentient Milk.')">Privacy (we know your cart)</a></li>
+            <li><a href="javascript:void(0)" onclick="alert('📦 Returns: Must be returned in original exploded state.')">Returns within 30 days</a></li>
+            <li><a href="javascript:void(0)" onclick="alert('🍪 Cookie Policy: Double chocolate chunk, 70% dark cocoa. Non-negotiable.')">Cookie policy (chocolate, 70%)</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer Bottom Bar -->
+      <div class="footer-bottom">
+        <div class="footer-bottom-left">
+          Built for a six hour hackathon. Reduced motion supported. Cart persisted locally.
+        </div>
+        <div class="footer-bottom-right">
+          No real payment details are ever requested.
+        </div>
+      </div>
+    </div>
+  </footer>
+  <div id="screen-wash-overlay"></div>
+
+  <!-- Audio Context Synthesizer Script -->
+  <script>
+    const AudioEngine = {
+      ctx: null,
+      muted: false,
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      },
+      blip(freq = 600, duration = 0.08) {
+        if (this.muted) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(freq * 0.5, this.ctx.currentTime + duration);
+          gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + duration);
+        } catch (e) {}
+      },
+      bubblePop() {
+        if (this.muted) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          const f = 1100 + Math.random() * 900;
+          osc.frequency.setValueAtTime(f, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(f * 0.25, this.ctx.currentTime + 0.06);
+          gain.gain.setValueAtTime(0.3, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.06);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.06);
+        } catch (e) {}
+      },
+      glassBreak() {
+        if (this.muted) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const bufferSize = this.ctx.sampleRate * 0.45;
+          const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+          const data = buffer.getChannelData(0);
+          for (let i = 0; i < bufferSize; i++) {
+            data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (this.ctx.sampleRate * 0.08));
+          }
+          const noise = this.ctx.createBufferSource();
+          noise.buffer = buffer;
+          const filter = this.ctx.createBiquadFilter();
+          filter.type = "highpass";
+          filter.frequency.value = 1400;
+          noise.connect(filter);
+          filter.connect(this.ctx.destination);
+          noise.start();
+
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(2600, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(300, this.ctx.currentTime + 0.4);
+          gain.gain.setValueAtTime(0.25, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.4);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.4);
+        } catch (e) {}
+      },
+      alarm() {
+        if (this.muted) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = "sawtooth";
+          osc.frequency.setValueAtTime(900, this.ctx.currentTime);
+          osc.frequency.setValueAtTime(450, this.ctx.currentTime + 0.15);
+          gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.3);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.3);
+        } catch (e) {}
+      }
+    };
+
+    // Sound toggle
+    document.getElementById("btn-sound-toggle").addEventListener("click", () => {
+      AudioEngine.muted = !AudioEngine.muted;
+      document.getElementById("sound-icon").textContent = AudioEngine.muted ? "🔇" : "🔊";
+    });
+
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+
+    function filterCategoryFromFooter(catName) {
+      scrollToSection('shop-section');
+      let targetCat = "ALL";
+      if (catName.includes("Dairy") || catName.includes("Food") || catName.includes("Groceries")) {
+        targetCat = "ABSURD GROCERIES & EDIBLES";
+      } else if (catName.includes("Electronics")) {
+        targetCat = "HOSTILE HOMEWARE & GADGETS";
+      } else if (catName.includes("Fashion")) {
+        targetCat = "EXISTENTIAL FASHION & APPAREL";
+      }
+      const btn = document.querySelector(`.chip-btn[data-category="${targetCat}"]`);
+      if (btn) btn.click();
+    }
+  </script>
+
+  <!-- Core JavaScript: Physics, Products, Wipes, Cart, and Chaos Engine -->
+  <script>
+    const chaosStage = document.getElementById("chaos-sandbox-stage");
+    const stageStatusBanner = document.getElementById("stage-status-banner");
+
+    /* =========================================================
+       1. HERO SECTION TICKER & COUNTDOWN
+       ========================================================= */
+    const STRIP_MESSAGES = [
+      "Everything on this page has been approved by nobody.",
+      "Our prices are supervised by an unsupervised intern.",
+      "Customer satisfaction is currently buffering.",
+      "Sale ends when the clock feels like it. The clock negotiates.",
+      "Free delivery over $75 and under one emotional breakdown."
+    ];
+    let stripIndex = 0;
+    setInterval(() => {
+      stripIndex = (stripIndex + 1) % STRIP_MESSAGES.length;
+      document.getElementById("strip-text").textContent = STRIP_MESSAGES[stripIndex];
+    }, 4500);
+
+    // Hero Countdown Clock
+    let countdownTotalSeconds = 10 * 3600 + 44 * 60 + 44;
+    const heroClockEl = document.getElementById("hero-countdown-clock");
+    setInterval(() => {
+      if (countdownTotalSeconds > 0) countdownTotalSeconds--;
+      const h = Math.floor(countdownTotalSeconds / 3600).toString().padStart(2, "0");
+      const m = Math.floor((countdownTotalSeconds % 3600) / 60).toString().padStart(2, "0");
+      const s = (countdownTotalSeconds % 60).toString().padStart(2, "0");
+      heroClockEl.textContent = `${h}:${m}:${s}`;
+    }, 1000);
+
+    /* =========================================================
+       2. CHAOS ENGINE STATE & TRIGGER SYSTEM
+       ========================================================= */
+    let chaosLevel = 0;
+    let chaosTriggered = false;
+    let entropyInterval = null;
+
+    const chaosPctBadge = document.getElementById("chaos-pct-badge");
+    const chaosPctFill = document.getElementById("chaos-pct-fill");
+    const chaosQuipText = document.getElementById("chaos-quip-text");
+
+    const CHAOS_QUIPS = [
+      "0 of 28 reactions discovered. Nothing has gone wrong yet. Statistically suspicious.",
+      "1 item detached. Containment breach detected in aisle 3.",
+      "Gravity calibration failure. Cart trajectory compromised.",
+      "High-level entropy. Elements refusing rotational compliance.",
+      "Total kinetic catastrophe. Facilities has resigned."
+    ];
+
+    function updateChaosDisplay() {
+      const pct = Math.min(100, Math.round((chaosLevel / 12) * 100));
+      chaosPctBadge.textContent = `${pct}%`;
+      chaosPctFill.style.width = `${pct}%`;
+
+      const quipIdx = Math.min(CHAOS_QUIPS.length - 1, Math.floor(chaosLevel / 3));
+      chaosQuipText.textContent = CHAOS_QUIPS[quipIdx];
+
+      if (chaosLevel >= 16 && chaosLevel <= 30) {
+        chaosStage.style.animation = "neon-fracture-strobe 0.25s infinite alternate";
+      } else {
+        chaosStage.style.animation = "none";
+      }
+    }
+
+    const styleSheet = document.createElement("style");
+    styleSheet.textContent = `
+      @keyframes neon-fracture-strobe {
+        0% { background: #fff4eb; }
+        50% { background: #ffe4dd; }
+        100% { background: #fef3c7; }
+      }
+    `;
+    document.head.appendChild(styleSheet);
+
+    // Global pointer click
+    window.addEventListener("pointerdown", (e) => {
+      AudioEngine.init();
+
+      if (e.target.closest(".nav") || e.target.closest(".strip") || e.target.closest(".hero-section") || e.target.closest(".chips-bar")) {
+        return;
+      }
+
+      if (chaosTriggered) {
+        chaosLevel++;
+        updateChaosDisplay();
+
+        const stageRect = chaosStage.getBoundingClientRect();
+        const stageClickX = e.clientX - stageRect.left;
+        const stageClickY = e.clientY - stageRect.top;
+        applyExplosionKinetic(stageClickX, stageClickY);
+      }
+    });
+
+    /* =========================================================
+       3. PRODUCTS INVENTORY (Preserved Completely)
+       ========================================================= */
+    const PRODUCTS = [
+      /* 1. ABSURD GROCERIES & EDIBLES */
+      {
+        id: "dehydrated-water",
+        category: "ABSURD GROCERIES & EDIBLES",
+        name: "Dehydrated Water (Canned)",
+        color: "#cbd5e0",
+        wipe: "fluid",
+        icon: "🥫",
+        price: 9.99,
+        oldPrice: 14.99,
+        weight: 5,
+        blurb: "Just add water to activate. Completely dry and static upon delivery."
+      },
+      {
+        id: "spicy-ice",
+        category: "ABSURD GROCERIES & EDIBLES",
+        name: "Spicy Ice Cubes",
+        color: "#ff4500",
+        wipe: "shatter",
+        icon: "🧊",
+        price: 4.20,
+        oldPrice: 8.50,
+        weight: 12,
+        blurb: "Infused with ghost peppers. Burns tongue while freezing teeth."
+      },
+      {
+        id: "fresh-milk",
+        category: "ABSURD GROCERIES & EDIBLES",
+        name: "Fresh Milk (Sentient)",
+        color: "#fcfaf2",
+        wipe: "fluid",
+        icon: "🥛",
+        price: 3.99,
+        oldPrice: 6.99,
+        weight: 18,
+        blurb: "Slightly sentient dairy. Floods viewport and erases price tags."
+      },
+      {
+        id: "banana-wraps",
+        category: "ABSURD GROCERIES & EDIBLES",
+        name: "Banana Wraps",
+        color: "#ffe135",
+        wipe: "cascade",
+        icon: "🍌",
+        price: 5.49,
+        oldPrice: 8.99,
+        weight: 12,
+        blurb: "Legally certified slip hazards protected by corporate liability waivers."
+      },
+
+      /* 2. HOSTILE HOMEWARE & GADGETS */
+      {
+        id: "used-bubble-wrap",
+        category: "HOSTILE HOMEWARE & GADGETS",
+        name: "Used Bubble Wrap (100% Popped)",
+        color: "#e2e8f0",
+        wipe: "cascade",
+        icon: "🫧",
+        price: 1.99,
+        oldPrice: 19.99,
+        weight: 2,
+        blurb: "Pre-deflated for your convenience. Absolutely zero popping satisfaction left."
+      },
+      {
+        id: "inverted-flashlight",
+        category: "HOSTILE HOMEWARE & GADGETS",
+        name: "Inverted Flashlight (Emits Shadows)",
+        color: "#1a202c",
+        wipe: "fluid",
+        icon: "🔦",
+        price: 34.99,
+        oldPrice: 49.99,
+        weight: 20,
+        blurb: "Projects 1,000 lumens of pure concentrated darkness into room."
+      },
+      {
+        id: "used-toaster",
+        category: "HOSTILE HOMEWARE & GADGETS",
+        name: "Used Toaster (Sparks Daily)",
+        color: "#ff4500",
+        wipe: "shatter",
+        icon: "🍞",
+        price: 19.99,
+        oldPrice: 39.99,
+        weight: 24,
+        blurb: "Only toasts on prime numbered days. Glitches browser rendering buffers."
+      },
+      {
+        id: "unstable-laptop",
+        category: "HOSTILE HOMEWARE & GADGETS",
+        name: "Unstable Laptop",
+        color: "#00f0ff",
+        wipe: "shatter",
+        icon: "💻",
+        price: 899.00,
+        oldPrice: 1499.00,
+        weight: 35,
+        blurb: "47 updates queued. The fan sounds like a tiny jet turbine."
+      },
+
+      /* 3. EXISTENTIAL FASHION & APPAREL */
+      {
+        id: "invisible-socks",
+        category: "EXISTENTIAL FASHION & APPAREL",
+        name: "Invisible Socks (Guaranteed Missing)",
+        color: "transparent",
+        wipe: "shatter",
+        icon: "🧦",
+        price: 15.00,
+        oldPrice: 25.00,
+        weight: 0,
+        blurb: "Comes pre-lost in the dryer dimension. 0kg shipping burden."
+      },
+      {
+        id: "cement-sneakers",
+        category: "EXISTENTIAL FASHION & APPAREL",
+        name: "Cement Sneakers (True Heavyweight)",
+        color: "#718096",
+        wipe: "cascade",
+        icon: "👟",
+        price: 89.99,
+        oldPrice: 199.99,
+        weight: 60,
+        blurb: "Guaranteed to exceed shopping cart weight limits and collapse page physics."
+      },
+      {
+        id: "fleeing-sneakers",
+        category: "EXISTENTIAL FASHION & APPAREL",
+        name: "Fleeing Sneakers",
+        color: "#ff2a85",
+        wipe: "cascade",
+        icon: "🏃",
+        price: 120.00,
+        oldPrice: 180.00,
+        weight: 14,
+        blurb: "Actively sprints away across the viewport when cursor approaches."
+      },
+      {
+        id: "existential-pillow",
+        category: "EXISTENTIAL FASHION & APPAREL",
+        name: "Existential Pillow",
+        color: "#a8ff78",
+        wipe: "fluid",
+        icon: "🛏️",
+        price: 29.99,
+        oldPrice: 45.00,
+        weight: 22,
+        blurb: "Softly whispers your middle school embarrassments while you sleep."
+      }
+    ];
+
+    /* =========================================================
+       4. PRISTINE GRID INITIALIZATION
+       ========================================================= */
+    const physicsEntities = [];
+    const productCardNodes = [];
+
+    function calculatePristineGridLayout() {
+      const stageW = chaosStage.clientWidth || 1150;
+      const stageH = chaosStage.clientHeight || 800;
+
+      const cols = 4;
+      const rows = 3;
+      const cardW = 254;
+      const cardH = 226;
+
+      const availW = stageW - 20;
+      const availH = stageH - 36;
+
+      const gapX = Math.max(14, (availW - cols * cardW) / (cols - 1));
+      const startX = Math.max(10, (stageW - (cols * cardW + (cols - 1) * gapX)) / 2);
+
+      const gapY = Math.max(16, (availH - rows * cardH) / (rows - 1));
+      const startY = Math.max(20, (stageH - (rows * cardH + (rows - 1) * gapY)) / 2);
+
+      return { cols, rows, cardW, cardH, gapX, gapY, startX, startY, stageW, stageH };
+    }
+
+    function createPristineProductCards() {
+      const layout = calculatePristineGridLayout();
+
+      PRODUCTS.forEach((p, idx) => {
+        const card = document.createElement("div");
+        card.className = "physics-entity shopbomb-card";
+        card.setAttribute("data-name", p.name);
+        card.setAttribute("data-color", p.color);
+        card.setAttribute("data-wipe", p.wipe);
+        card.setAttribute("data-id", p.id);
+        card.setAttribute("data-category", p.category);
+        card.setAttribute("data-price", p.price);
+        card.setAttribute("data-weight", p.weight);
+
+        const colIdx = idx % layout.cols;
+        const rowIdx = Math.floor(idx / layout.cols);
+        const gridX = Math.round(layout.startX + colIdx * (layout.cardW + layout.gapX));
+        const gridY = Math.round(layout.startY + rowIdx * (layout.cardH + layout.gapY));
+
+        card.innerHTML = `
+          <div>
+            <div class="card-top-row">
+              <span class="card-cat-badge">${p.category}</span>
+              <span class="card-weight">${p.weight}kg</span>
+            </div>
+            <div class="card-art" style="background: radial-gradient(circle at 50% 50%, ${p.color === 'transparent' ? '#ffffff' : p.color}25, #f8fafc);">
+              ${p.icon}
+              <span class="card-wipe-badge">${p.wipe}</span>
+            </div>
+            <h3 class="card-title">${p.name}</h3>
+            <p class="card-blurb">${p.blurb}</p>
+          </div>
+          <div class="card-bottom">
+            <div class="price-box">
+              <div class="price-row">
+                <span class="card-price">$${p.price.toFixed(2)}</span>
+                <s class="card-old-price">$${p.oldPrice.toFixed(2)}</s>
+              </div>
+            </div>
+            <button type="button" class="btn-add">Add to Cart</button>
+          </div>
+        `;
+
+        card.style.transform = `translate3d(${gridX}px, ${gridY}px, 0px) rotate(0deg)`;
+        chaosStage.appendChild(card);
+
+        const entity = {
+          element: card,
+          product: p,
+          isProduct: true,
+          active: false,
+          gridX: gridX,
+          gridY: gridY,
+          vector: [gridX, gridY, 0, 0, p.weight > 30 ? 3.5 : (p.weight < 5 ? 1.2 : 2.2), 0, 0],
+          width: layout.cardW,
+          height: layout.cardH
+        };
+
+        physicsEntities.push(entity);
+        productCardNodes.push({ element: card, product: p, entity: entity });
+
+        const addBtn = card.querySelector(".btn-add");
+        addBtn.addEventListener("pointerdown", (e) => {
+          e.stopPropagation();
+          handleAddToCartCatalyst(entity);
+        });
+      });
+
+      // Checkout Bubble
+      const checkoutBubble = document.getElementById("checkout-bubble");
+      const bubbleX = layout.stageW - 130;
+      const bubbleY = 24;
+      checkoutBubble.style.transform = `translate3d(${bubbleX}px, ${bubbleY}px, 0px) rotate(0deg)`;
+
+      const checkoutEntity = {
+        element: checkoutBubble,
+        isProduct: false,
+        active: false,
+        gridX: bubbleX,
+        gridY: bubbleY,
+        vector: [bubbleX, bubbleY, 0, 0, 1.8, 0, 0],
+        width: 100,
+        height: 100
+      };
+      physicsEntities.push(checkoutEntity);
+
+      checkoutBubble.addEventListener("click", () => {
+        openCheckoutModal();
+      });
+    }
+
+    createPristineProductCards();
+
+    window.addEventListener("resize", () => {
+      const layout = calculatePristineGridLayout();
+      physicsEntities.forEach((item, idx) => {
+        if (!item.active && item.isProduct) {
+          const colIdx = idx % layout.cols;
+          const rowIdx = Math.floor(idx / layout.cols);
+          item.gridX = Math.round(layout.startX + colIdx * (layout.cardW + layout.gapX));
+          item.gridY = Math.round(layout.startY + rowIdx * (layout.cardH + layout.gapY));
+          item.vector[0] = item.gridX;
+          item.vector[1] = item.gridY;
+          item.element.style.transform = `translate3d(${item.gridX}px, ${item.gridY}px, 0px) rotate(0deg)`;
+        }
+      });
+    });
+
+    /* =========================================================
+       5. CATALYST & GRADUAL ENTROPY PIPELINE
+       ========================================================= */
+    function triggerMilkSpill() {
+      const milkItem = productCardNodes.find(p => p.product.id === "fresh-milk");
+      if (milkItem) {
+        scrollToSection("shop-section");
+        setTimeout(() => {
+          handleAddToCartCatalyst(milkItem.entity);
+        }, 600);
+      }
+    }
+
+    function handleAddToCartCatalyst(catalystEntity) {
+      AudioEngine.blip(800, 0.2);
+      triggerScreenWipe(catalystEntity.element, catalystEntity.product);
+
+      if (!chaosTriggered) {
+        chaosTriggered = true;
+        chaosLevel = 1;
+        updateChaosDisplay();
+
+        stageStatusBanner.textContent = "💥 CHAOS INITIATED: Zero-gravity containment failure! Products detaching...";
+        stageStatusBanner.style.borderColor = "#ff2a85";
+        stageStatusBanner.style.color = "#ff2a85";
+
+        detachNode(catalystEntity, 5, -6, 2.5);
+        startGradualEntropyPipeline();
+      } else {
+        if (!catalystEntity.active) {
+          detachNode(catalystEntity, (Math.random() - 0.5) * 6, -5, (Math.random() - 0.5) * 3);
+          chaosLevel++;
+          updateChaosDisplay();
+        }
+      }
+    }
+
+    function detachNode(itemEntity, vx, vy, vr) {
+      itemEntity.active = true;
+      itemEntity.vector[2] = vx;
+      itemEntity.vector[3] = vy;
+      itemEntity.vector[6] = vr;
+      itemEntity.element.classList.add("card-detached");
+      AudioEngine.blip(650 + Math.random() * 400, 0.09);
+    }
+
+    function startGradualEntropyPipeline() {
+      if (entropyInterval) return;
+
+      entropyInterval = setInterval(() => {
+        const remainingStatic = physicsEntities.filter(e => e.isProduct && !e.active && e.element.style.display !== "none");
+
+        if (remainingStatic.length > 0) {
+          const target = remainingStatic[Math.floor(Math.random() * remainingStatic.length)];
+          const vx = (Math.random() - 0.5) * 4;
+          const vy = -2 - Math.random() * 1.5;
+          const vr = (Math.random() - 0.5) * 1.5;
+
+          detachNode(target, vx, vy, vr);
+          chaosLevel++;
+          updateChaosDisplay();
+
+          const checkoutEnt = physicsEntities.find(e => !e.isProduct);
+          if (checkoutEnt && !checkoutEnt.active && chaosLevel >= 3) {
+            checkoutEnt.active = true;
+            checkoutEnt.vector[2] = (Math.random() - 0.5) * 3;
+            checkoutEnt.vector[3] = -2;
+            checkoutEnt.vector[6] = 0.4;
+          }
+        } else {
+          clearInterval(entropyInterval);
+          entropyInterval = null;
+          stageStatusBanner.textContent = "🌪️ TOTAL ANTIGRAVITY: All catalogue units completely unbound!";
+          stageStatusBanner.style.color = "#ffd65a";
+          stageStatusBanner.style.borderColor = "#ffd65a";
+        }
+      }, 1500);
+    }
+
+    /* =========================================================
+       6. PHYSICS RENDER LOOP
+       ========================================================= */
+    function applyExplosionKinetic(clickX, clickY) {
+      physicsEntities.forEach(item => {
+        if (!item.active || item.element.style.display === "none") return;
+        const cx = item.vector[0] + item.width / 2;
+        const cy = item.vector[1] + item.height / 2;
+        const dx = cx - clickX;
+        const dy = cy - clickY;
+        const dist = Math.hypot(dx, dy);
+        if (dist < 340 && dist > 1) {
+          const force = (340 - dist) / 20 / item.vector[4];
+          item.vector[2] += (dx / dist) * force;
+          item.vector[3] += (dy / dist) * force;
+          item.vector[6] += (Math.random() - 0.5) * 5;
+        }
+      });
+    }
+
+    chaosStage.addEventListener("mouseover", (e) => {
+      if (chaosTriggered && chaosLevel >= 6 && chaosLevel <= 15) {
+        const card = e.target.closest(".physics-entity");
+        if (card) {
+          const item = physicsEntities.find(p => p.element === card);
+          if (item && item.active) {
+            item.vector[2] += (Math.random() - 0.5) * 4;
+            item.vector[3] += (Math.random() - 0.5) * 4;
+            card.style.transform += " scale(1.12)";
+          }
+        }
+      }
+    });
+
+    function physicsLoop() {
+      const stageW = chaosStage.clientWidth || 1150;
+      const stageH = chaosStage.clientHeight || 740;
+
+      let antigravityForce = -0.055;
+      let speedMultiplier = 1;
+
+      if (chaosLevel >= 6 && chaosLevel <= 15) {
+        speedMultiplier = 1.9;
+        antigravityForce = -0.11;
+      } else if (chaosLevel >= 16 && chaosLevel <= 30) {
+        speedMultiplier = 2.5;
+        antigravityForce = -0.16;
+      } else if (chaosLevel >= 31) {
+        speedMultiplier = 3.3;
+        antigravityForce = -0.21;
+      }
+
+      for (let i = 0; i < physicsEntities.length; i++) {
+        const item = physicsEntities[i];
+        if (item.element.style.display === "none") continue;
+
+        if (!item.active) {
+          item.element.style.transform = `translate3d(${item.gridX}px, ${item.gridY}px, 0px) rotate(0deg)`;
+          continue;
+        }
+
+        const v = item.vector;
+
+        v[3] += antigravityForce / v[4];
+        v[2] *= 0.99;
+        v[3] *= 0.99;
+
+        v[0] += v[2] * speedMultiplier;
+        v[1] += v[3] * speedMultiplier;
+
+        if (chaosLevel >= 6) {
+          v[5] += v[6] * (chaosLevel >= 16 ? 2.3 : 1);
+        } else {
+          v[5] = Math.sin(Date.now() * 0.002 + i) * 3;
+        }
+
+        const rightEdge = Math.max(10, stageW - item.width);
+        const bottomEdge = Math.max(10, stageH - item.height);
+
+        if (v[0] <= 0) {
+          v[0] = 0;
+          v[2] = Math.abs(v[2]) * 0.9;
+        } else if (v[0] >= rightEdge) {
+          v[0] = rightEdge;
+          v[2] = -Math.abs(v[2]) * 0.9;
+        }
+
+        if (v[1] <= 0) {
+          v[1] = 0;
+          v[3] = Math.abs(v[3]) * 0.9;
+        } else if (v[1] >= bottomEdge) {
+          v[1] = bottomEdge;
+          v[3] = -Math.abs(v[3]) * 0.9;
+        }
+
+        let scale = 1;
+        if (chaosLevel >= 16 && chaosLevel <= 30) {
+          scale = 0.5 + Math.sin(Date.now() * 0.005 + i * 2) * 0.5 + 0.5;
+        }
+
+        item.element.style.transform = `translate3d(${v[0]}px, ${v[1]}px, 0px) rotate(${v[5]}deg) scale(${scale})`;
+      }
+
+      requestAnimationFrame(physicsLoop);
+    }
+    requestAnimationFrame(physicsLoop);
+
+    /* =========================================================
+       7. EVASIVE CHECKOUT BUBBLE
+       ========================================================= */
+    const checkoutBubble = document.getElementById("checkout-bubble");
+
+    window.addEventListener("pointermove", (e) => {
+      if (chaosTriggered && chaosLevel > 3) {
+        const checkoutEnt = physicsEntities.find(p => !p.isProduct);
+        if (!checkoutEnt) return;
+
+        const stageRect = chaosStage.getBoundingClientRect();
+        const stageMouseX = e.clientX - stageRect.left;
+        const stageMouseY = e.clientY - stageRect.top;
+
+        const cx = checkoutEnt.vector[0] + checkoutEnt.width / 2;
+        const cy = checkoutEnt.vector[1] + checkoutEnt.height / 2;
+        const dx = cx - stageMouseX;
+        const dy = cy - stageMouseY;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist < 120 && dist > 0) {
+          checkoutEnt.active = true;
+          const evadeSpeed = 16;
+          checkoutEnt.vector[2] = (dx / dist) * evadeSpeed;
+          checkoutEnt.vector[3] = (dy / dist) * evadeSpeed;
+          checkoutBubble.style.boxShadow = "0 0 50px #00ffff, 0 0 100px #ff0066";
+        }
+      }
+    });
+
+    /* =========================================================
+       8. SEARCH & CATEGORY CHIPS
+       ========================================================= */
+    const chipButtons = document.querySelectorAll(".chip-btn");
+    let currentFilter = "ALL";
+    let searchQuery = "";
+
+    function applyFilters() {
+      productCardNodes.forEach(({ element, product }) => {
+        const matchesCategory = currentFilter === "ALL" || product.category === currentFilter;
+        const matchesSearch = !searchQuery || 
+          product.name.toLowerCase().includes(searchQuery) || 
+          product.blurb.toLowerCase().includes(searchQuery) ||
+          product.category.toLowerCase().includes(searchQuery);
+
+        if (matchesCategory && matchesSearch) {
+          element.style.display = "flex";
+        } else {
+          element.style.display = "none";
+        }
+      });
+    }
+
+    chipButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        chipButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentFilter = btn.getAttribute("data-category");
+        AudioEngine.blip(800, 0.05);
+        applyFilters();
+      });
+    });
+
+    const searchInput = document.getElementById("search-input");
+    function executeSearch() {
+      searchQuery = searchInput.value.trim().toLowerCase();
+      applyFilters();
+      scrollToSection("shop-section");
+    }
+
+    searchInput.addEventListener("input", (e) => {
+      searchQuery = e.target.value.trim().toLowerCase();
+      applyFilters();
+    });
+
+    searchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        executeSearch();
+      }
+    });
+
+    /* =========================================================
+       9. PROCEDURAL SCREEN WASH ENGINE
+       ========================================================= */
+    const overlay = document.getElementById("screen-wash-overlay");
+    let isWiping = false;
+
+    function triggerScreenWipe(cardNode, product) {
+      if (isWiping) return;
+      isWiping = true;
+
+      const wipeType = cardNode.getAttribute("data-wipe");
+      const name = cardNode.getAttribute("data-name");
+      const color = cardNode.getAttribute("data-color");
+      const pid = product.id;
+
+      overlay.style.display = "block";
+      overlay.style.pointerEvents = "auto";
+      overlay.innerHTML = "";
+
+      if (pid === "dehydrated-water") {
+        overlay.innerHTML = `
+          <div class="dry-run-box">
+            <div>🥫 CRITICAL DRYNESS: DEHYDRATED WATER</div>
+            <div class="faint-msg">DRY RUN: Aisle is perfectly clear.</div>
+          </div>
+        `;
+      } else if (pid === "spicy-ice") {
+        document.body.classList.add("spicy-ice-active");
+        AudioEngine.alarm();
+
+        for (let i = 0; i < 16; i++) {
+          const frag = document.createElement("div");
+          frag.className = "shatter-fragment";
+          frag.textContent = "🔥 SPICY ICE FREEZE-BURN 🧊";
+          frag.style.fontSize = `${Math.random() * 40 + 28}px`;
+          frag.style.left = `${Math.random() * 80}vw`;
+          frag.style.top = `${Math.random() * 80}vh`;
+          overlay.appendChild(frag);
+        }
+
+        setTimeout(() => {
+          document.body.classList.remove("spicy-ice-active");
+        }, 2400);
+      } else if (pid === "used-bubble-wrap") {
+        const grid = document.createElement("div");
+        grid.className = "bubble-wrap-grid";
+        for (let i = 0; i < 100; i++) {
+          const bubble = document.createElement("div");
+          bubble.className = "bubble-cell";
+          bubble.addEventListener("pointerover", () => {
+            if (!bubble.classList.contains("popped")) {
+              bubble.classList.add("popped");
+              AudioEngine.bubblePop();
+            }
+          });
+          grid.appendChild(bubble);
+        }
+        overlay.appendChild(grid);
+      } else if (pid === "inverted-flashlight") {
+        const pinhole = document.createElement("div");
+        pinhole.className = "pinhole-vignette";
+        pinhole.innerHTML = `<div class="pinhole-label">🔦 SHADOW EMISSION ENGAGED (2.5s)</div>`;
+        overlay.appendChild(pinhole);
+        AudioEngine.blip(200, 0.4);
+      } else if (pid === "invisible-socks") {
+        document.body.classList.add("invisible-text-mode");
+        AudioEngine.blip(1400, 0.1);
+
+        const banner = document.createElement("div");
+        banner.className = "cascade-alert";
+        banner.style.background = "#334155";
+        banner.textContent = "🧦 INVISIBLE SOCKS: ALL TEXT LOCATIONS LOST";
+        overlay.appendChild(banner);
+
+        setTimeout(() => {
+          document.body.classList.remove("invisible-text-mode");
+        }, 2400);
+      } else if (wipeType === "fluid") {
+        const fluid = document.createElement("div");
+        fluid.className = "fluid-layer";
+        fluid.style.backgroundColor = color;
+        overlay.appendChild(fluid);
+
+        requestAnimationFrame(() => {
+          fluid.style.height = "100%";
+        });
+
+        setTimeout(() => {
+          fluid.innerHTML = `<div class="fluid-spill-text">CRITICAL SPILL: Cleaning up ${name}...</div>`;
+          AudioEngine.glassBreak();
+        }, 1000);
+      } else if (wipeType === "cascade") {
+        for (let i = 0; i < 80; i++) {
+          const flake = document.createElement("span");
+          flake.className = "cascade-flake";
+          flake.style.left = `${Math.random() * 96}vw`;
+          flake.style.backgroundColor = color;
+          flake.style.color = "#111";
+          flake.style.animationDelay = `${Math.random() * 0.6}s`;
+          flake.textContent = product.icon || "⚠️";
+          overlay.appendChild(flake);
+        }
+
+        setTimeout(() => {
+          const alert = document.createElement("div");
+          alert.className = "cascade-alert";
+          alert.textContent = `ALARM: Overloaded by ${name}!`;
+          overlay.appendChild(alert);
+          AudioEngine.alarm();
+        }, 1100);
+      } else if (wipeType === "shatter") {
+        document.body.style.filter = "invert(1) hue-rotate(180deg) blur(5px)";
+        AudioEngine.glassBreak();
+
+        for (let i = 0; i < 16; i++) {
+          const frag = document.createElement("div");
+          frag.className = "shatter-fragment";
+          frag.textContent = name;
+          frag.style.fontSize = `${Math.random() * 55 + 35}px`;
+          frag.style.left = `${Math.random() * 85}vw`;
+          frag.style.top = `${Math.random() * 80}vh`;
+          overlay.appendChild(frag);
+        }
+
+        setTimeout(() => {
+          document.body.style.filter = "none";
+        }, 1600);
+      }
+
+      setTimeout(() => {
+        addToCart(product);
+      }, 1250);
+
+      setTimeout(() => {
+        overlay.innerHTML = "";
+        overlay.style.display = "none";
+        overlay.style.pointerEvents = "none";
+        isWiping = false;
+      }, 2500);
+    }
+
+    /* =========================================================
+       10. CART SABOTAGE & DEGRADATION
+       ========================================================= */
+    const cart = [];
+    const cartCountEl = document.getElementById("cart-count");
+
+    function updateCartDOM() {
+      cartCountEl.textContent = cart.length;
+    }
+
+    function addToCart(product) {
+      cart.push({ ...product });
+      updateCartDOM();
+
+      const totalWeight = cart.reduce((w, i) => w + (i.weight || 0), 0);
+      if (totalWeight > 50) {
+        triggerCartCollapse();
+      }
+    }
+
+    setInterval(() => {
+      if (cart.length > 0) {
+        cart.forEach(item => { item.price += 0.01; });
+      }
+    }, 1000);
+
+    function triggerCartCollapse() {
+      AudioEngine.glassBreak();
+      const droppedItems = [...cart];
+      cart.length = 0;
+      updateCartDOM();
+
+      physicsEntities.forEach(item => {
+        if (item.active) {
+          item.vector[2] += (Math.random() - 0.5) * 18;
+          item.vector[3] += (Math.random() - 0.5) * 18;
+        }
+      });
+
+      alert("💥 CART COLLAPSE! Total weight exceeded 50kg and the basket shattered! Re-catch your floating items!");
+
+      const stageW = chaosStage.clientWidth || 1150;
+      const stageH = chaosStage.clientHeight || 740;
+
+      droppedItems.forEach(p => {
+        const shard = document.createElement("div");
+        shard.className = "physics-entity";
+        shard.style.background = "#ff4757";
+        shard.style.color = "#fff";
+        shard.style.padding = "6px 12px";
+        shard.style.borderRadius = "20px";
+        shard.style.fontSize = "11px";
+        shard.style.fontWeight = "900";
+        shard.textContent = `🏃 RE-CATCH: ${p.name} ($${p.price.toFixed(2)})`;
+        chaosStage.appendChild(shard);
+
+        const entity = {
+          element: shard,
+          isProduct: false,
+          active: true,
+          vector: [Math.random() * (stageW - 220), Math.random() * (stageH - 100), (Math.random() - 0.5) * 14, -Math.random() * 8, 1.4, 0, (Math.random() - 0.5) * 2],
+          width: 200,
+          height: 40
+        };
+        physicsEntities.push(entity);
+
+        shard.addEventListener("click", () => {
+          AudioEngine.blip(900);
+          shard.remove();
+          const idx = physicsEntities.indexOf(entity);
+          if (idx !== -1) physicsEntities.splice(idx, 1);
+          addToCart(p);
+        });
+      });
+    }
+
+    /* =========================================================
+       11. TORTURE CHECKOUT MODALS
+       ========================================================= */
+    let checkoutStep = 1;
+
+    function openCheckoutModal() {
+      if (cart.length === 0) {
+        alert("⚠️ Your cart is empty! Click 'Add to Cart' to add items first.");
+        return;
+      }
+      AudioEngine.blip(1000);
+      checkoutStep = 1;
+      renderCheckoutWindow();
+    }
+
+    function renderCheckoutWindow() {
+      const oldModal = document.getElementById("torture-modal");
+      if (oldModal) oldModal.remove();
+
+      const modalScrim = document.createElement("div");
+      modalScrim.id = "torture-modal";
+      modalScrim.className = "torture-modal-scrim";
+
+      const win = document.createElement("div");
+      win.className = "torture-window";
+
+      if (checkoutStep === 1) renderStep1(win);
+      else if (checkoutStep === 2) renderStep2Captcha(win);
+      else if (checkoutStep === 3) renderSuccess(win);
+
+      modalScrim.appendChild(win);
+      document.body.appendChild(modalScrim);
+    }
+
+    function renderStep1(win) {
+      const baseTotal = cart.reduce((sum, item) => sum + item.price, 0);
+
+      win.innerHTML = `
+        <h2>Secure Checkout - Step 1 of 2</h2>
+        <div style="font-size: 13px; color: #a1b0cc; margin-bottom: 20px;">
+          Cart Subtotal: <b>$${baseTotal.toFixed(2)}</b> (Subject to inflation)
+        </div>
+
+        <form id="checkout-form" onsubmit="return false;">
+          <div class="form-group">
+            <label>Credit Card Number (Virtual Shuffle Only)</label>
+            <input type="text" id="cc-input" class="form-input" placeholder="Click to type card..." readonly />
+            <div id="virtual-keyboard"></div>
+          </div>
+
+          <div class="form-group">
+            <label>Delivery Phone Number (Micro-Slider Interval 1)</label>
+            <div class="phone-range-wrap">
+              <div class="phone-range-display" id="phone-display">+1 (555) 555-5555</div>
+              <input type="range" id="phone-slider" class="range-slider" min="1000000000" max="9999999999" step="1" value="5555555555" />
+            </div>
+          </div>
+
+          <div class="paradox-box">
+            <input type="checkbox" id="paradox-check" checked />
+            <label for="paradox-check">
+              Do not uncheck this box if you wish to decline opting out of denying our non-refundable premium air packaging surcharge ($299.99).
+            </label>
+          </div>
+
+          <div style="font-size: 16px; font-weight: 900; margin-bottom: 16px; color: #ffd000;">
+            Invoice Total: <span id="modal-invoice-total">$${(baseTotal + 299.99).toFixed(2)}</span>
+          </div>
+
+          <button type="button" class="submit-btn-real" id="btn-next-step">Proceed to Emotional Verification</button>
+        </form>
+      `;
+
+      const ccInput = win.querySelector("#cc-input");
+      const vkContainer = win.querySelector("#virtual-keyboard");
+      let digits = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "CLEAR", "⌫"];
+
+      function shuffleVK() {
+        vkContainer.innerHTML = "";
+        const shuffled = [...digits].sort(() => Math.random() - 0.5);
+        shuffled.forEach(key => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "vk-key";
+          btn.textContent = key;
+          btn.addEventListener("click", () => {
+            AudioEngine.blip(500);
+            if (key === "CLEAR") ccInput.value = "";
+            else if (key === "⌫") ccInput.value = ccInput.value.slice(0, -1);
+            else ccInput.value += key;
+            shuffleVK();
+          });
+          vkContainer.appendChild(btn);
+        });
+      }
+
+      ccInput.addEventListener("focus", (e) => {
+        e.preventDefault();
+        shuffleVK();
+      });
+      shuffleVK();
+
+      const phoneSlider = win.querySelector("#phone-slider");
+      const phoneDisplay = win.querySelector("#phone-display");
+      phoneSlider.addEventListener("input", (e) => {
+        const val = e.target.value.toString();
+        phoneDisplay.textContent = `+1 (${val.slice(0,3)}) ${val.slice(3,6)}-${val.slice(6)}`;
+      });
+
+      const paradoxCheck = win.querySelector("#paradox-check");
+      const invoiceTotalEl = win.querySelector("#modal-invoice-total");
+
+      function updateInvoice() {
+        const grandTotal = baseTotal + (paradoxCheck.checked ? 299.99 : 0);
+        invoiceTotalEl.textContent = `$${grandTotal.toFixed(2)}`;
+      }
+      paradoxCheck.addEventListener("change", updateInvoice);
+
+      const nextBtn = win.querySelector("#btn-next-step");
+      nextBtn.addEventListener("click", () => {
+        checkoutStep = 2;
+        renderCheckoutWindow();
+      });
+    }
+
+    let captchaAttempts = 0;
+
+    function renderStep2Captcha(win) {
+      win.innerHTML = `
+        <h2>Identity & Philosophy Verification</h2>
+        <p style="font-size: 13.5px; color: #cfd8f0; line-height: 1.45;">
+          <b>Prompt:</b> "Select all images that evoke a profound sense of deep, existential longing."
+        </p>
+
+        <div class="captcha-grid" id="captcha-grid"></div>
+        <div class="captcha-err" id="captcha-err"></div>
+
+        <button type="button" class="submit-btn-real" id="btn-captcha-verify">Submit Emotional Proof</button>
+      `;
+
+      const grid = win.querySelector("#captcha-grid");
+      const errEl = win.querySelector("#captcha-err");
+
+      for (let i = 0; i < 4; i++) {
+        const canvas = document.createElement("canvas");
+        canvas.className = "captcha-tile";
+        canvas.width = 240;
+        canvas.height = 140;
+        const ctx = canvas.getContext("2d");
+
+        const grad = ctx.createLinearGradient(0, 0, 240, 140);
+        grad.addColorStop(0, ["#0a0f1d", "#1f041e", "#021c1e", "#1b1902"][i]);
+        grad.addColorStop(1, ["#341b3d", "#083b40", "#2b0a1a", "#070b14"][i]);
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 240, 140);
+
+        ctx.strokeStyle = "rgba(255,255,255,0.15)";
+        ctx.lineWidth = 2;
+        for (let j = 0; j < 5; j++) {
+          ctx.beginPath();
+          ctx.arc(40 + j * 40, 70 + Math.sin(j + i) * 30, 20 + j * 5, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        canvas.addEventListener("click", () => {
+          AudioEngine.blip(600);
+          canvas.classList.toggle("selected");
+        });
+
+        grid.appendChild(canvas);
+      }
+
+      const verifyBtn = win.querySelector("#btn-captcha-verify");
+      verifyBtn.addEventListener("click", () => {
+        captchaAttempts++;
+        if (captchaAttempts === 1) {
+          AudioEngine.alarm();
+          errEl.textContent = "Error: Your clicking cadence was calculated as too mechanical. Please try again with more emotional variance.";
+        } else {
+          AudioEngine.blip(1400);
+          checkoutStep = 3;
+          renderCheckoutWindow();
+        }
+      });
+    }
+
+    function renderSuccess(win) {
+      win.innerHTML = `
+        <div class="order-success-screen">
+          <div style="font-size: 54px; margin-bottom: 10px;">🎉</div>
+          <h1>PURCHASE CONFIRMED!</h1>
+          <p style="color: #cfd8f0; font-size: 14px; line-height: 1.5;">
+            Your misbehaving items and non-refundable packaging surcharge have been confirmed.
+            Our carrier pigeons are currently declining responsibility.
+          </p>
+          <button type="button" class="submit-btn-real" id="btn-close-all" style="margin-top: 20px;">
+            Return to the Void
+          </button>
+        </div>
+      `;
+
+      win.querySelector("#btn-close-all").addEventListener("click", () => {
+        document.getElementById("torture-modal")?.remove();
+        cart.length = 0;
+        updateCartDOM();
+      });
+    }
+
+    /* Ambient Space Canvas inside Stage */
+    const spaceCanvas = document.getElementById("space-canvas");
+    const sCtx = spaceCanvas.getContext("2d");
+
+    function resizeSpace() {
+      spaceCanvas.width = chaosStage.clientWidth || 1150;
+      spaceCanvas.height = chaosStage.clientHeight || 740;
+    }
+    window.addEventListener("resize", resizeSpace);
+    resizeSpace();
+
+    const stars = Array.from({ length: 45 }, () => ({
+      x: Math.random() * (chaosStage.clientWidth || 1150),
+      y: Math.random() * (chaosStage.clientHeight || 740),
+      radius: Math.random() * 1.5 + 0.5,
+      alpha: Math.random(),
+      speed: Math.random() * 0.3 + 0.1
+    }));
+
+    function drawStars() {
+      sCtx.clearRect(0, 0, spaceCanvas.width, spaceCanvas.height);
+      sCtx.fillStyle = "#ffffff";
+      stars.forEach(st => {
+        st.y -= st.speed;
+        if (st.y < 0) st.y = spaceCanvas.height;
+        sCtx.globalAlpha = st.alpha * 0.7;
+        sCtx.beginPath();
+        sCtx.arc(st.x, st.y, st.radius, 0, Math.PI * 2);
+        sCtx.fill();
+      });
+      requestAnimationFrame(drawStars);
+    }
+    requestAnimationFrame(drawStars);
+  </script>
+</body>
 </html>
