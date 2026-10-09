@@ -1775,6 +1775,89 @@
       animation: breach-yellow-flash 0.3s 4 ease-in-out !important;
     }
 
+    /* The Fullscreen Captive Loop Engine Styles */
+    .captive-escape-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100vw;
+      background: #ffd000;
+      color: #111827;
+      z-index: 100000;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 30px rgba(255, 208, 0, 0.7);
+      animation: captive-flash 0.35s infinite alternate ease-in-out;
+      box-sizing: border-box;
+    }
+
+    @keyframes captive-flash {
+      0% {
+        background: #ffd000;
+        color: #0f172a;
+        box-shadow: 0 4px 25px rgba(255, 208, 0, 0.7);
+      }
+      100% {
+        background: #ef4444;
+        color: #ffffff;
+        box-shadow: 0 4px 35px rgba(239, 68, 68, 0.85);
+      }
+    }
+
+    .captive-banner-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .captive-warning-icon {
+      font-size: 18px;
+    }
+
+    .captive-total-tag {
+      font-size: 11px;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 3px 8px;
+      border-radius: 9999px;
+      letter-spacing: 0.05em;
+    }
+
+    #fullscreen-waiver-btn {
+      position: absolute;
+      z-index: 10000;
+      padding: 8px 16px;
+      font-size: 11px;
+      font-weight: 900;
+      color: #032b10;
+      background: linear-gradient(135deg, #00ff66, #ffd000);
+      border: 2px solid #ffffff;
+      border-radius: 9999px;
+      box-shadow: 0 0 25px rgba(0, 255, 102, 0.9);
+      cursor: pointer;
+      white-space: nowrap;
+      user-select: none;
+      -webkit-user-select: none;
+      pointer-events: auto;
+      transition: transform 0.05s linear;
+      font-family: inherit;
+    }
+
+    #fullscreen-waiver-btn:hover {
+      background: linear-gradient(135deg, #ffd000, #ff2a85);
+      color: #ffffff;
+      box-shadow: 0 0 35px #ff2a85;
+    }
+
     /* Biometric Fingerprint Scanner Component */
     .biometric-scanner-container {
       background: rgba(15, 23, 42, 0.7);
@@ -3160,6 +3243,8 @@
       } else {
         chaosStage.style.animation = "none";
       }
+
+      checkFullscreenCaptiveActivation();
     }
 
     const styleSheet = document.createElement("style");
@@ -3171,6 +3256,184 @@
       }
     `;
     document.head.appendChild(styleSheet);
+
+    // =========================================================
+    // THE FULLSCREEN CAPTIVE LOOP ENGINE
+    // =========================================================
+    let captiveSurchargeTotal = 0;
+    let captiveBannerEl = null;
+    let waiverEntity = null;
+
+    function isDocFullscreen() {
+      return !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+    }
+
+    function requestBrowserFullscreen() {
+      const docEl = document.documentElement;
+      const rfs = docEl.requestFullscreen || docEl.webkitRequestFullscreen || docEl.mozRequestFullScreen || docEl.msRequestFullscreen;
+      if (rfs) {
+        try {
+          const res = rfs.call(docEl);
+          if (res && res.catch) {
+            res.catch(() => {});
+          }
+        } catch (e) {}
+      }
+    }
+
+    function exitBrowserFullscreen() {
+      const efs = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+      if (efs && isDocFullscreen()) {
+        try {
+          const res = efs.call(document);
+          if (res && res.catch) {
+            res.catch(() => {});
+          }
+        } catch (e) {}
+      }
+    }
+
+    function showCaptiveEscapeBanner() {
+      if (!captiveBannerEl) {
+        captiveBannerEl = document.createElement("div");
+        captiveBannerEl.id = "captive-escape-banner";
+        captiveBannerEl.className = "captive-escape-banner";
+        document.body.appendChild(captiveBannerEl);
+      }
+      captiveBannerEl.style.display = "flex";
+      captiveBannerEl.innerHTML = `
+        <div class="captive-banner-content">
+          <span class="captive-warning-icon">⚠️</span>
+          <span>ESCAPE ATTEMPT LOGGED: A $10.00 'Captive Truandency Surcharge' has been appended to your checkout bill for processing structural defiance.</span>
+          <span class="captive-total-tag">(Defiance Penalty Total: +$${captiveSurchargeTotal.toFixed(2)})</span>
+        </div>
+      `;
+    }
+
+    function hideCaptiveBanner() {
+      if (captiveBannerEl) {
+        captiveBannerEl.style.display = "none";
+      }
+    }
+
+    function spawnWaiverButton() {
+      if (waiverEntity) return;
+
+      const btn = document.createElement("button");
+      btn.id = "fullscreen-waiver-btn";
+      btn.type = "button";
+      btn.textContent = "Click here to sign an official waiver promising never to leave us again.";
+      chaosStage.appendChild(btn);
+
+      const stageW = chaosStage.clientWidth || 1150;
+      const stageH = chaosStage.clientHeight || 740;
+
+      const entity = {
+        element: btn,
+        isProduct: false,
+        isWaiver: true,
+        active: true,
+        vector: [
+          Math.max(20, Math.random() * (stageW - 380)),
+          Math.max(20, Math.random() * (stageH - 80)),
+          (Math.random() - 0.5) * 6,
+          -3 - Math.random() * 2,
+          1.2,
+          0,
+          (Math.random() - 0.5) * 3
+        ],
+        width: 360,
+        height: 38
+      };
+
+      physicsEntities.push(entity);
+      waiverEntity = entity;
+
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        AudioEngine.blip(1400, 0.3);
+
+        // 1. set chaosLevel = 0
+        chaosLevel = 0;
+        updateChaosDisplay();
+
+        // 2. reset invoice fines to zero
+        captiveSurchargeTotal = 0;
+        updateInvoiceTotalDOM();
+
+        // 3. remove banner
+        hideCaptiveBanner();
+
+        // 4. remove button from physics and DOM
+        btn.remove();
+        const idx = physicsEntities.indexOf(entity);
+        if (idx !== -1) physicsEntities.splice(idx, 1);
+        waiverEntity = null;
+
+        // 5. safely restore window to normal operating boundaries
+        exitBrowserFullscreen();
+      });
+    }
+
+    function updateInvoiceTotalDOM() {
+      const invoiceTotalEl = document.getElementById("modal-invoice-total");
+      if (invoiceTotalEl) {
+        const paradoxCheck = document.getElementById("paradox-check");
+        const baseTotal = cart.reduce((sum, item) => sum + item.price, 0);
+        const hasAirPackaging = paradoxCheck ? paradoxCheck.checked : true;
+        const grandTotal = baseTotal + (hasAirPackaging ? 299.99 : 0) + captiveSurchargeTotal;
+        invoiceTotalEl.textContent = `$${grandTotal.toFixed(2)}`;
+      }
+      const fineRow = document.getElementById("captive-fine-row");
+      if (fineRow) {
+        fineRow.style.display = captiveSurchargeTotal > 0 ? "block" : "none";
+        fineRow.textContent = `Captive Truandency Surcharge: +$${captiveSurchargeTotal.toFixed(2)}`;
+      }
+    }
+
+    // 1. Mutation checker hook monitoring chaosLevel variable
+    function checkFullscreenCaptiveActivation() {
+      if (chaosLevel > 20) {
+        if (!isDocFullscreen()) {
+          requestBrowserFullscreen();
+        }
+        spawnWaiverButton();
+      }
+    }
+
+    // 2. Escape Key Interceptor (The Infinite Fullscreen Loop)
+    function handleFullscreenChange() {
+      if (!isDocFullscreen() && chaosLevel > 20) {
+        // Re-trigger requestFullscreen() command immediately
+        requestBrowserFullscreen();
+
+        // 3. Captive Truandency Surcharge: add $10.00
+        captiveSurchargeTotal += 10.00;
+        updateInvoiceTotalDOM();
+
+        // Launch flashing warning-yellow overlay banner
+        showCaptiveEscapeBanner();
+
+        AudioEngine.alarm();
+      }
+    }
+
+    ["fullscreenchange", "webkitfullscreenchange", "mozfullscreenchange", "MSFullscreenChange"].forEach(evt => {
+      document.addEventListener(evt, handleFullscreenChange);
+      window.addEventListener(evt, handleFullscreenChange);
+    });
+
+    // Re-lock fallback on any interaction if chaosLevel > 20 and not fullscreen
+    window.addEventListener("click", () => {
+      checkFullscreenCaptiveActivation();
+    }, { passive: true });
+
+    window.addEventListener("keydown", (e) => {
+      if (chaosLevel > 20 && !isDocFullscreen()) {
+        requestBrowserFullscreen();
+      }
+    }, { passive: true });
 
     // Global pointer click
     window.addEventListener("pointerdown", (e) => {
@@ -3188,6 +3451,8 @@
         const stageClickX = e.clientX - stageRect.left;
         const stageClickY = e.clientY - stageRect.top;
         applyExplosionKinetic(stageClickX, stageClickY);
+
+        checkFullscreenCaptiveActivation();
       }
     });
 
@@ -3680,25 +3945,46 @@
 
     window.addEventListener("pointermove", (e) => {
       if (chaosTriggered && chaosLevel > 3) {
-        const checkoutEnt = physicsEntities.find(p => !p.isProduct);
-        if (!checkoutEnt) return;
+        const checkoutEnt = physicsEntities.find(p => !p.isProduct && !p.isWaiver);
+        if (checkoutEnt) {
+          const stageRect = chaosStage.getBoundingClientRect();
+          const stageMouseX = e.clientX - stageRect.left;
+          const stageMouseY = e.clientY - stageRect.top;
 
+          const cx = checkoutEnt.vector[0] + checkoutEnt.width / 2;
+          const cy = checkoutEnt.vector[1] + checkoutEnt.height / 2;
+          const dx = cx - stageMouseX;
+          const dy = cy - stageMouseY;
+          const dist = Math.hypot(dx, dy);
+
+          if (dist < 120 && dist > 0) {
+            checkoutEnt.active = true;
+            const evadeSpeed = 16;
+            checkoutEnt.vector[2] = (dx / dist) * evadeSpeed;
+            checkoutEnt.vector[3] = (dy / dist) * evadeSpeed;
+            checkoutBubble.style.boxShadow = "0 0 50px #00ffff, 0 0 100px #ff0066";
+          }
+        }
+      }
+
+      // Evasive movement for the floating waiver button
+      if (waiverEntity && waiverEntity.active) {
         const stageRect = chaosStage.getBoundingClientRect();
         const stageMouseX = e.clientX - stageRect.left;
         const stageMouseY = e.clientY - stageRect.top;
 
-        const cx = checkoutEnt.vector[0] + checkoutEnt.width / 2;
-        const cy = checkoutEnt.vector[1] + checkoutEnt.height / 2;
+        const cx = waiverEntity.vector[0] + waiverEntity.width / 2;
+        const cy = waiverEntity.vector[1] + waiverEntity.height / 2;
         const dx = cx - stageMouseX;
         const dy = cy - stageMouseY;
         const dist = Math.hypot(dx, dy);
 
-        if (dist < 120 && dist > 0) {
-          checkoutEnt.active = true;
-          const evadeSpeed = 16;
-          checkoutEnt.vector[2] = (dx / dist) * evadeSpeed;
-          checkoutEnt.vector[3] = (dy / dist) * evadeSpeed;
-          checkoutBubble.style.boxShadow = "0 0 50px #00ffff, 0 0 100px #ff0066";
+        if (dist < 140 && dist > 0) {
+          const evadeSpeed = 15;
+          waiverEntity.vector[2] = (dx / dist) * evadeSpeed;
+          waiverEntity.vector[3] = (dy / dist) * evadeSpeed;
+          waiverEntity.vector[6] += (Math.random() - 0.5) * 4;
+          waiverEntity.element.style.boxShadow = "0 0 35px #ff2a85, 0 0 50px #ffd000";
         }
       }
     });
@@ -4131,7 +4417,10 @@
           </div>
 
           <div style="font-size: 16px; font-weight: 900; margin-bottom: 16px; color: #ffd000;">
-            Invoice Total: <span id="modal-invoice-total">$${(baseTotal + 299.99).toFixed(2)}</span>
+            Invoice Total: <span id="modal-invoice-total">$${(baseTotal + 299.99 + captiveSurchargeTotal).toFixed(2)}</span>
+            <div id="captive-fine-row" style="font-size: 12px; color: #ff6248; font-weight: 700; margin-top: 4px; ${captiveSurchargeTotal > 0 ? '' : 'display:none;'}">
+              Captive Truandency Surcharge: +$${captiveSurchargeTotal.toFixed(2)}
+            </div>
           </div>
 
           <!-- Screen Biometric Fingerprint Scanner -->
@@ -4304,8 +4593,13 @@
       const invoiceTotalEl = win.querySelector("#modal-invoice-total");
 
       function updateInvoice() {
-        const grandTotal = baseTotal + (paradoxCheck.checked ? 299.99 : 0);
+        const grandTotal = baseTotal + (paradoxCheck.checked ? 299.99 : 0) + captiveSurchargeTotal;
         invoiceTotalEl.textContent = `$${grandTotal.toFixed(2)}`;
+        const fineRow = win.querySelector("#captive-fine-row");
+        if (fineRow) {
+          fineRow.style.display = captiveSurchargeTotal > 0 ? "block" : "none";
+          fineRow.textContent = `Captive Truandency Surcharge: +$${captiveSurchargeTotal.toFixed(2)}`;
+        }
       }
       paradoxCheck.addEventListener("change", updateInvoice);
 

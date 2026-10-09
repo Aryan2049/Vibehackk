@@ -110,6 +110,26 @@ Built with zero external CSS/UI frameworks, an inline Web Audio synthesizer, an 
     - `#nested-maze-box` collapses, forcing the user to re-enter all data from scratch.
   - **Success Mode**: Answering `36` within 5 seconds locks `#fake-terms-checkbox` to `checked = true`, disables deselection, displays a `✓ BIOLOGICALLY VERIFIED` badge, and allows proceeding.
 
+### 9. The Fullscreen Captive Loop Engine (Inescapable UI Lockdown)
+- **The Captive Activation Trigger**:
+  - Monitored inside the global click/pointerdown mutation hooks tracking the `chaosLevel` state variable.
+  - The exact moment `chaosLevel` increments past `20`, triggers native browser fullscreen: `document.documentElement.requestFullscreen()` with vendor fallbacks (`webkit`, `moz`, `ms`) and Promise `.catch()` handlers to seamlessly bypass strict browser policy rejections.
+  - Instantly locks the presentation layer into a borderless, desktop-filling viewport context.
+- **The Escape Key Interceptor (Infinite Fullscreen Loop)**:
+  - Listens to `fullscreenchange` and vendor state events.
+  - If document exits fullscreen (`document.fullscreenElement === null`) while `chaosLevel > 20`:
+    - Immediately re-triggers `requestFullscreen()` to snap the viewport back before layout reflow finishes.
+    - Launches a flashing, warning-yellow/red overlay banner (`#captive-escape-banner`) across the horizontal screen axis.
+- **The Captive Truandency Surcharge**:
+  - Each intercepted escape attempt triggers a financial penalty mutation script:
+    - Displays banner notice: *"ESCAPE ATTEMPT LOGGED: A $10.00 'Captive Truandency Surcharge' has been appended to your checkout bill for processing structural defiance."*
+    - Appends `+$10.00` to the cumulative `captiveSurchargeTotal` invoice balance.
+    - Updates `#modal-invoice-total` and `#captive-fine-row` in real-time in the DOM.
+- **Safe In-Game Exit Workaround (Moving Waiver Target)**:
+  - Spawns a floating button inside the chaos sandbox floor canvas labeled: *"Click here to sign an official waiver promising never to leave us again."*
+  - Follows dynamic physics loops: moves, spins (`rot` / `vrot`), and physically accelerates away from the mouse pointer whenever approached.
+  - Timing and clicking this evasive target sets `chaosLevel = 0`, resets all invoice surcharges to zero, removes warning banners, and calls `document.exitFullscreen()` to safely restore standard window boundaries.
+
 ---
 
 ## Storefront Inventory
