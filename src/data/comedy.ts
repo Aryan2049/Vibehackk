@@ -1,11 +1,96 @@
 import type { ReactionKind } from "../types";
 
 export const STRIP_LINES = [
-  "Free delivery over $75 and under one emotional breakdown",
-  "Returns accepted within 30 days and one written apology",
-  "Every product tested on a real website by real cowards",
-  "Now hiring: one animator, no supervision, unlimited foam",
+  "Our prices are supervised by an unsupervised intern.",
+  "Free shipping! The package may take the scenic route.",
+  "Buy now. Regret responsibly.",
+  "Our AI has reviewed your cart and has concerns.",
+  "Customer satisfaction is currently buffering.",
+  "Sale ends when the clock feels like it. The clock negotiates.",
+  "Everything on this page has been approved by nobody.",
 ];
+
+/** Rotating reassurance in the hero system-health meter. */
+export const HEALTH_LINES = [
+  "Everything is probably fine.",
+  "Recalibrating confidence.",
+  "Still probably fine, probably.",
+  "The intern has been consulted.",
+  "All systems nominally nominal.",
+];
+
+/** The promotional label rewrites itself. */
+export const PROMO_LABELS = [
+  "400% OFF (we have not explained how)",
+  "Prices adjusted by an intern",
+  "Door crasher: doors removed for safety",
+  "Seen nowhere. Reviewed by nobody.",
+  "Now with fewer refunds",
+];
+
+/** Sticker wording on each product card. One per product. */
+export const CARD_STICKERS: Record<ReactionKind, string> = {
+  milk: "CEO approved by nobody",
+  coffee: "Too much, on purpose",
+  water: "Certified void",
+  soda: "3,000 bubbles free",
+  egg: "Future career: bird",
+  bread: "Promoted to breakfast",
+  banana: "Slip hazard (legal)",
+  chips: "47 crumbs included",
+  chocolate: "Therapy in a bar",
+  phone: "Battery: 101%",
+  laptop: "47 updates ready",
+  headphones: "Main character energy",
+  mouse: "Rage included",
+  tshirt: "Pattern: unapproved",
+  shoes: "Likely to flee",
+  sunglasses: "Extremely vibes",
+  hat: "Now the boss",
+  pillow: "8 hour life support",
+  alarm: "Snooze warranted",
+  vacuum: "Cleans your tabs",
+  fan: "Wind warning",
+  shampoo: "Hair: happier",
+  perfume: "Smells expensive",
+  toothpaste: "Visible from orbit",
+  teddy: "Certified hugger",
+  book: "Spoilers inside",
+  puzzle: "99% complete",
+  duck: "Twelve suspects",
+};
+
+/** Idle bubble shown when a card is spotlighted while you do nothing. */
+export const IDLE_LABELS: Record<ReactionKind, string> = {
+  milk: "Slightly unstable",
+  coffee: "Do not shake",
+  water: "Floating since Tuesday",
+  soda: "Shake at your own risk",
+  egg: "Wobbling",
+  bread: "Thinking about toast",
+  banana: "Slip hazard",
+  chips: "Crumbs on standby",
+  chocolate: "Emotionally available",
+  phone: "47 unread alerts",
+  laptop: "Updating (always)",
+  headphones: "Scoring your walk",
+  mouse: "Rage idling",
+  tshirt: "Needs a word",
+  shoes: "Do not make eye contact",
+  sunglasses: "Too cool for this",
+  hat: "Running the company",
+  pillow: "Do not disturb",
+  alarm: "Snoozing (again)",
+  vacuum: "Judging your floor",
+  fan: "Gust incoming",
+  shampoo: "More lather than needed",
+  perfume: "Trail detected",
+  toothpaste: "Smile charging",
+  teddy: "Requests a hug",
+  book: "Ready to spoil",
+  puzzle: "One piece short",
+  duck: "Twelve ducks, no alibi",
+};
 
 export const BAND_LINES = [
   "You shop. We make it worse.",
@@ -41,6 +126,7 @@ export const ACHIEVEMENTS: AchievementDef[] = [
   { id: "first-mistake", title: "FIRST MISTAKE", detail: "You added an item to your cart. There is no undo for the feeling.", icon: "🛒" },
   { id: "dairy-survivor", title: "DAIRY SURVIVOR", detail: "You escaped the milk spill with your router mostly intact.", icon: "🥛" },
   { id: "athletic", title: "ATHLETIC CUSTOMER", detail: "You chased your shoes and caught them. Your legs are certified.", icon: "👟" },
+  { id: "shoes-left", title: "SHOES HAVE LEFT THE BUILDING", detail: "The shoes fled their own product card. Nobody has recovered them.", icon: "🏃" },
   { id: "chaos-agent", title: "CERTIFIED CHAOS AGENT", detail: "Five product reactions triggered. Facilities has been notified.", icon: "🔥" },
   { id: "snack", title: "SNACK SITUATION", detail: "Three food reactions. Your keyboard is now 4% crumbs by weight.", icon: "🍫" },
   { id: "technician", title: "ACCIDENTAL TECHNICIAN", detail: "You silenced a phone and skipped an update in one sitting.", icon: "🖥️" },

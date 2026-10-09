@@ -10,11 +10,12 @@ import { DemoControls } from "./components/DemoControls";
 import { SupportBot } from "./components/SupportBot";
 import { Band, Footer, PromiseBand, SupportSection } from "./components/Sections";
 import { AmbientLayer, CursorTrail } from "./components/Ambient";
+import { useIdleSpotlight } from "./hooks";
 import { CATEGORIES, PRODUCTS, PRODUCT_BY_ID } from "./data/products";
 import { ACHIEVEMENTS, CART_QUIPS, EMPTY_SEARCH } from "./data/comedy";
 import { COUPONS, useCart, type CouponState } from "./store";
 import { REACTIONS } from "./reactions/registry";
-import { matches } from "./search";
+import { matches, searchProducts } from "./search";
 import { blip } from "./sound";
 import type { Category, Product, ReactionKind, Toast, ToastTone } from "./types";
 
@@ -70,6 +71,8 @@ export default function App(): JSX.Element {
 
   const [toasts, setToasts] = useState<Toast[]>([]);
   const toastId = useRef(0);
+  const lastToastAt = useRef(0);
+  const toastTimers = useRef<number[]>([]);
 
   const [reaction, setReaction] = useState<{ product: Product; seq: number } | null>(null);
   const [discovered, setDiscovered] = useState<ReactionKind[]>([]);
@@ -89,19 +92,34 @@ export default function App(): JSX.Element {
     }, 4600);
   }, []);
 
+  /* Achievements are rate limited so milestones never ambush the shopper. */
+  const achievedRef = useRef<string[]>([]);
+
   const award = useCallback(
     (id: string) => {
-      setAchieved((prev) => {
-        if (prev.includes(id)) return prev;
-        const def = ACHIEVEMENTS.find((a) => a.id === id);
-        if (def) {
-          pushToast("amber", def.icon, `Achievement unlocked: ${def.title}`, def.detail);
-        }
-        return [...prev, id];
-      });
+      if (achievedRef.current.includes(id)) return;
+      const def = ACHIEVEMENTS.find((a) => a.id === id);
+      if (!def) return;
+
+      achievedRef.current = [...achievedRef.current, id];
+      setAchieved(achievedRef.current);
+
+      const wait = Math.max(0, 2600 - (Date.now() - lastToastAt.current));
+      const show = () => {
+        lastToastAt.current = Date.now();
+        pushToast("amber", def.icon, `Achievement unlocked: ${def.title}`, def.detail);
+      };
+
+      if (wait <= 0) show();
+      else toastTimers.current.push(window.setTimeout(show, wait));
     },
     [pushToast],
   );
+
+  useEffect(() => {
+    const timers = toastTimers.current;
+    return () => timers.forEach((t) => window.clearTimeout(t));
+  }, []);
 
   /* ---------------- reaction control ---------------- */
   const triggerReaction = useCallback(
@@ -126,6 +144,7 @@ export default function App(): JSX.Element {
 
       if (!discovered.includes(kind)) {
         if (kind === "milk") award("dairy-survivor");
+        if (kind === "shoes") award("shoes-left");
         if (nextDiscovered.length >= 5) award("chaos-agent");
         if (FOOD_REACTIONS.filter((k) => nextDiscovered.includes(k)).length >= 3) award("snack");
         if (nextDiscovered.includes("phone") && nextDiscovered.includes("laptop")) award("technician");
@@ -137,6 +156,7 @@ export default function App(): JSX.Element {
 
   const resetAllEffects = useCallback(() => {
     setReaction(null);
+    setToasts([]);
     delete document.body.dataset.reaction;
   }, []);
 
@@ -163,6 +183,19 @@ export default function App(): JSX.Element {
     return () => document.body.classList.remove("no-scroll");
   }, [cartOpen, checkoutOpen]);
 
+  /* ---------------- a tiny fictional support notification, once ---------------- */
+  useEffect(() => {
+    const id = window.setTimeout(() => {
+      pushToast(
+        "teal",
+        "🎧",
+        "Support: we have noticed activity in your cart",
+        "We do not have concerns yet. We are assembling them.",
+      );
+    }, 9000);
+    return () => window.clearTimeout(id);
+  }, [pushToast]);
+
   /* ---------------- cart actions ---------------- */
   const handleAdd = useCallback(
     (product: Product, quiet = false) => {
@@ -181,7 +214,7 @@ export default function App(): JSX.Element {
 
   /* ---------------- search ---------------- */
   const suggestions = useMemo(
-    () => (query.trim() ? PRODUCTS.filter((p) => matches(p, query)).slice(0, 6) : []),
+    () => (query.trim() ? searchProducts(query).slice(0, 6) : []),
     [query],
   );
 
@@ -189,7 +222,7 @@ export default function App(): JSX.Element {
     (value: string) => {
       setSubmitted(value);
       if (value.trim()) {
-        const found = PRODUCTS.filter((p) => matches(p, value));
+        const found = searchProducts(value);
         if (found.length > 0) triggerReaction(found[0]);
       }
       document.getElementById("shop")?.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
@@ -280,6 +313,7 @@ export default function App(): JSX.Element {
   }
 
   const ActiveReaction = reaction ? REACTIONS[reaction.product.reaction].Component : null;
+  const idleIndex = useIdleSpotlight(visible.length, reduced);
 
   const cursorScene =
     reaction !== null && ["milk", "shoes", "vacuum", "fan", "duck"].includes(reaction.product.reaction);
@@ -323,9 +357,10 @@ export default function App(): JSX.Element {
 
         <section className="section" id="shop">
           <div className="wrap">
-            <div className="section__head">
-              <div>
-                <h2 className="section__title">The whole catalogue, all of it faulty</h2>
+          <div className="section__head">
+            <div>
+              <span className="eyebrow">⚠️ Humour loads with the page. No clicking required.</span>
+              <h2 className="section__title">The whole catalogue, all of it faulty</h2>
                 <p className="section__note">
                   {submitted
                     ? `Showing results for “${submitted}”. Click any illustration to find out what that product does to this page.`
@@ -392,6 +427,7 @@ export default function App(): JSX.Element {
                     key={p.id}
                     product={p}
                     index={i}
+                    idle={i === idleIndex}
                     onReact={triggerReaction}
                     onAdd={handleAdd}
                   />
@@ -425,6 +461,7 @@ export default function App(): JSX.Element {
           setBotShown(true);
           setBotOpen(true);
         }}
+        onTrigger={triggerReaction}
       />
 
       <SupportBot open={botOpen} onClose={() => setBotOpen(false)} />

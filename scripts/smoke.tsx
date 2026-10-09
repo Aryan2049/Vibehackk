@@ -3,8 +3,22 @@ import { renderToString } from "react-dom/server";
 import App from "../src/App";
 import { PRODUCTS, PRODUCT_BY_ID, CATEGORIES } from "../src/data/products";
 import { REACTIONS } from "../src/reactions/registry";
-import { matches, searchProducts } from "../src/search";
+import { matches, resolveQuery, searchProducts } from "../src/search";
 import { COUPONS, money } from "../src/store";
+import { CartDrawer } from "../src/components/CartDrawer";
+import { CheckoutModal, ORDER_STAGES } from "../src/components/CheckoutModal";
+import { ProductCard } from "../src/components/ProductCard";
+import {
+  ACHIEVEMENTS,
+  CARD_STICKERS,
+  CART_QUIPS,
+  HEALTH_LINES,
+  IDLE_LABELS,
+  PROMO_LABELS,
+  REVIEW_JOKES,
+  STRIP_LINES,
+} from "../src/data/comedy";
+import { formatClock } from "../src/hooks";
 import type { ReactionKind, Product } from "../src/types";
 
 const noop = () => {};
@@ -17,6 +31,8 @@ function check(name: string, ok: boolean) {
 
 /* 1. full app render */
 const html = renderToString(<App />);
+/* renderToString escapes punctuation, so decode it for text assertions. */
+const plain = html.replace(/&#x27;/g, "'").replace(/&amp;/g, "&").replace(/&quot;/g, '"');
 check("brand name renders", html.includes("Oops!Mart"));
 check("tagline renders", html.includes("You shop. We make it worse."));
 check("promise section renders", html.includes("The cart always works"));
@@ -96,7 +112,80 @@ check(
 check("an unknown coupon cannot discount", !Object.prototype.hasOwnProperty.call(COUPONS, "NOTACODE"));
 check("money formats to two decimals", money(3.5) === "$3.50");
 
-/* 7. reactions never block the storefront controls */
+/* 7. the redesigned first viewport carries humour before any click */
+check("hero uses the new headline", plain.includes("THE BIGGEST SALE THAT") && plain.includes("SHOULDN'T EXIST"));
+check("hero uses the new supporting copy", html.includes("therapist may hear about"));
+check("hero offers a SHOP THE CHAOS call to action", html.includes("SHOP THE CHAOS"));
+check("hero renders a countdown", /\d\d:\d\d:\d\d/.test(html));
+check("hero renders a system health indicator", html.includes("System status") && html.includes("probably fine"));
+check("hero renders an absurd promotional badge", html.includes("-400%"));
+check("hero renders a changing promo label", PROMO_LABELS.some((l) => html.includes(l)));
+check("announcement strip cycles jokes from data", STRIP_LINES.length >= 5 && HEALTH_LINES.length >= 4);
+check("countdown clock formats correctly", formatClock(3661) === "01:01:01");
+
+/* 8. product cards are alive before they are clicked */
+check("every card renders a rotating sticker", (html.match(/class="card__sticker/g) ?? []).length === 28);
+check("every card renders a fictional review snippet", (html.match(/Fictional review/g) ?? []).length === 28);
+check("every card carries its product id", (html.match(/data-id="/g) ?? []).length === 28);
+check("a sticker is defined for every product", PRODUCTS.every((p) => Boolean(CARD_STICKERS[p.reaction])));
+check("an idle label is defined for every product", PRODUCTS.every((p) => Boolean(IDLE_LABELS[p.reaction])));
+check(
+  "undiscounted products show their joke sticker",
+  plain.includes("Certified void") && plain.includes("Future career: bird"),
+);
+check("discounted products show their discount sticker", /-\d+% off/.test(html));
+
+/* 9. search aliases reach the seeded catalogue */
+const aliasCases: [string, string][] = [
+  ["smartphone", "phone"],
+  ["mobile", "phone"],
+  ["sneakers", "shoes"],
+  ["jigsaw", "puzzle"],
+  ["cologne", "perfume"],
+  ["hoover", "vacuum"],
+  ["plush", "teddy"],
+  ["crisps", "chips"],
+  ["duvet", "pillow"],
+  ["headset", "headphones"],
+  ["toothbrush", "toothpaste"],
+  ["plantain", "banana"],
+];
+for (const [alias, keyword] of aliasCases) {
+  const resolved = resolveQuery(alias);
+  const results = searchProducts(alias);
+  check(
+    `alias "${alias}" resolves to "${keyword}"`,
+    resolved === keyword && results.some((r) => r.reaction === keyword),
+  );
+}
+check(
+  "aliases never override a real product match",
+  resolveQuery("shoes") === "shoes" && searchProducts("milk")[0].reaction === "milk",
+);
+
+/* 10. achievements and demo controls */
+check("achievements include the four required milestones", [
+  "first-mistake",
+  "dairy-survivor",
+  "shoes-left",
+  "chaos-agent",
+].every((id) => ACHIEVEMENTS.some((a) => a.id === id && a.title.length > 0)));
+check("shoes achievement is titled as specified", ACHIEVEMENTS.some((a) => a.title === "SHOES HAVE LEFT THE BUILDING"));
+check("no duplicate achievement ids", new Set(ACHIEVEMENTS.map((a) => a.id)).size === ACHIEVEMENTS.length);
+
+/* 11. the design system document matches the implemented tokens */
+const doc = readFileSync("DESIGN_SYSTEM.md", "utf8").toLowerCase();
+const css = readFileSync("src/index.css", "utf8").toLowerCase();
+for (const token of ["#fff8ed", "#17243d", "#ff6248", "#ffd65a", "#ddf3e4"]) {
+  check(`palette ${token} is in both the design system and the tokens`, doc.includes(token) && css.includes(token));
+}
+for (const token of ["--t-playful", "--z-overlay", "--space-section", "--focus-ring", "--sp-6"]) {
+  check(`motion, layer or spacing token ${token} exists`, css.includes(token));
+}
+check("design system documents resetAllEffects", doc.includes("resetalleffects"));
+check("design system documents the behavioural identity", doc.includes("behavioural identity"));
+
+/* 12. reactions never block the storefront controls */
 const rx = readFileSync("src/reactions.css", "utf8");
 check("reaction overlay ignores pointer events", /\.rx\s*\{[^}]*pointer-events:\s*none/.test(rx));
 check("reaction action bar stays clickable", /\.rx__bar\s*\{[^}]*pointer-events:\s*auto/.test(rx));

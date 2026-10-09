@@ -1,7 +1,8 @@
-import { useEffect, useState, type FormEvent, type JSX } from "react";
+import { useEffect, useRef, useState, type FormEvent, type JSX } from "react";
 import type { CartLine } from "../types";
 import { PRODUCT_BY_ID } from "../data/products";
 import { money } from "../store";
+import { useDialogFocus } from "../hooks";
 import { Confetti } from "./Confetti";
 
 export const ORDER_STAGES = [
@@ -66,6 +67,8 @@ export function CheckoutModal({
   const [orderNumber] = useState(
     () => `OM-${Math.floor(100000 + Math.random() * 899999)}`,
   );
+  const panelRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(panelRef, true, onClose);
 
   const count = lines.reduce((n, l) => n + l.qty, 0);
 
@@ -109,7 +112,7 @@ export function CheckoutModal({
   return (
     <div className="modal" role="dialog" aria-modal="true" aria-label="Checkout">
       <div className="scrim" onClick={stage === "form" ? onClose : undefined} aria-hidden="true" />
-      <div className="modal__panel">
+      <div className="modal__panel" ref={panelRef}>
         {stage === "done" ? <Confetti reduced={reduced} /> : null}
 
         <div className="modal__head">

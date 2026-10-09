@@ -1,7 +1,8 @@
-import { useState, type FormEvent, type JSX } from "react";
+import { useRef, useState, type FormEvent, type JSX } from "react";
 import type { CartLine } from "../types";
 import { PRODUCT_BY_ID } from "../data/products";
 import { money } from "../store";
+import { useDialogFocus } from "../hooks";
 import { ProductArt } from "./Art";
 
 export interface CouponMessage {
@@ -41,6 +42,8 @@ export function CartDrawer({
   onCheckout,
 }: CartDrawerProps): JSX.Element | null {
   const [code, setCode] = useState("");
+  const panelRef = useRef<HTMLElement>(null);
+  useDialogFocus(panelRef, open, onClose);
 
   if (!open) return null;
 
@@ -55,7 +58,7 @@ export function CartDrawer({
   return (
     <>
       <div className="scrim" onClick={onClose} aria-hidden="true" />
-      <aside className="drawer" role="dialog" aria-modal="true" aria-label="Shopping cart">
+      <aside className="drawer" ref={panelRef} role="dialog" aria-modal="true" aria-label="Shopping cart">
         <div className="drawer__head">
           <h2>Your cart</h2>
           <span className="drawer__count">
