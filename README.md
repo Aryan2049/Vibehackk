@@ -63,6 +63,12 @@ Built with zero external CSS/UI frameworks, an inline Web Audio synthesizer, an 
   - **Stage 3 (Syntactic Paradox)**: Triggers once Stage 2 matches. Must contain a valid string of HTML code rendering a tiny uncheckable checkbox (`<input type="checkbox" disabled>`) with a live inline rendered preview.
 - **The Rejection Trap**: When all structural criteria are simultaneously satisfied and "Create Secure Account" is submitted, the form intercepts submission, flashes a warning that the password is *"dangerously intelligent"*, and wipes the input field back to scratch.
 
+### 6. The Laggy Slippery Input Engine (Payment Field Sabotage)
+- **Target**: Credit card / payment input element (`<input id="cc-input">`).
+- **The Progressive Delay Matrix (`chaosLevel > 10`)**: Intercepts `keydown` with `e.preventDefault()`, introducing a 3000ms character rendering latency loop via `setTimeout` to ruin real-time typing feedback.
+- **The Chaotic Character Scrambler (`chaosLevel > 20`)**: Upgrades latency into an aggressive string scrambler trap. Each typed character is appended and passed through a localized random mutation function that shuffles the string indices immediately.
+- **The Backspace Sabotage (`chaosLevel > 15`)**: Pressing Backspace has a 20% random probability of backfiring, appending a random numeric digit (0-9) rather than deleting characters.
+
 ---
 
 ## Storefront Inventory
