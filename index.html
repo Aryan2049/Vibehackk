@@ -2806,8 +2806,8 @@
   </div>
 
   <!-- Bottom-Right Floating Demo Mode Button -->
-  <button type="button" class="demo-btn" onclick="alert('DEMO MODE: Ready. Scroll down to shop or trigger any misbehaving product!')">
-    DEMO MODE
+  <button type="button" id="btn-demo-chaos" class="demo-btn" style="background: linear-gradient(135deg, #ff2a85, #ffd000); box-shadow: 0 0 20px rgba(255, 42, 133, 0.6); cursor: pointer;" title="Instant test trigger for Level 21 Fullscreen Captive Loop">
+    ⚡ DEMO CHAOS (Lv. 21)
   </button>
 
   <!-- =========================================================
@@ -3231,12 +3231,14 @@
     ];
 
     function updateChaosDisplay() {
-      const pct = Math.min(100, Math.round((chaosLevel / 12) * 100));
-      chaosPctBadge.textContent = `${pct}%`;
+      const pct = Math.min(100, Math.round((chaosLevel / 25) * 100));
+      chaosPctBadge.textContent = `Lv.${chaosLevel} (${pct}%)`;
       chaosPctFill.style.width = `${pct}%`;
 
-      const quipIdx = Math.min(CHAOS_QUIPS.length - 1, Math.floor(chaosLevel / 3));
-      chaosQuipText.textContent = CHAOS_QUIPS[quipIdx];
+      const quipIdx = Math.min(CHAOS_QUIPS.length - 1, Math.floor(chaosLevel / 5));
+      chaosQuipText.textContent = chaosLevel > 20
+        ? "⚠️ CHAOS THRESHOLD BREACHED (Lv. 20+): Fullscreen captive loop lock engaged! Surcharges active."
+        : CHAOS_QUIPS[quipIdx];
 
       if (chaosLevel >= 16 && chaosLevel <= 30) {
         chaosStage.style.animation = "neon-fracture-strobe 0.25s infinite alternate";
@@ -3425,9 +3427,30 @@
     });
 
     // Re-lock fallback on any interaction if chaosLevel > 20 and not fullscreen
-    window.addEventListener("click", () => {
+    // Global click listener with mutation checker hook
+    window.addEventListener("click", (e) => {
+      AudioEngine.init();
+
+      if (isLoginModalOpen || e.target.closest("#login-modal") || e.target.closest("#fullscreen-waiver-btn")) {
+        return;
+      }
+
+      // If chaos is active, increment chaosLevel on each click
+      if (chaosTriggered) {
+        chaosLevel++;
+        updateChaosDisplay();
+
+        if (chaosStage) {
+          const stageRect = chaosStage.getBoundingClientRect();
+          const stageClickX = e.clientX - stageRect.left;
+          const stageClickY = e.clientY - stageRect.top;
+          applyExplosionKinetic(stageClickX, stageClickY);
+        }
+      }
+
+      // 1. Mutation checker hook inside the global click listener
       checkFullscreenCaptiveActivation();
-    }, { passive: true });
+    });
 
     window.addEventListener("keydown", (e) => {
       if (chaosLevel > 20 && !isDocFullscreen()) {
@@ -3435,26 +3458,58 @@
       }
     }, { passive: true });
 
-    // Global pointer click
+    // Global pointer click for physics explosions
     window.addEventListener("pointerdown", (e) => {
       AudioEngine.init();
 
-      if (isLoginModalOpen || e.target.closest("#login-modal") || e.target.closest(".nav") || e.target.closest(".strip") || e.target.closest(".hero-section") || e.target.closest(".chips-bar")) {
+      if (isLoginModalOpen || e.target.closest("#login-modal") || e.target.closest("#fullscreen-waiver-btn")) {
         return;
       }
 
       if (chaosTriggered) {
-        chaosLevel++;
-        updateChaosDisplay();
-
         const stageRect = chaosStage.getBoundingClientRect();
         const stageClickX = e.clientX - stageRect.left;
         const stageClickY = e.clientY - stageRect.top;
         applyExplosionKinetic(stageClickX, stageClickY);
-
-        checkFullscreenCaptiveActivation();
       }
     });
+
+    // Wire up DEMO CHAOS (Lv. 21) button and Clickable Chaos HUD
+    function initChaosTriggers() {
+      const demoBtn = document.getElementById("btn-demo-chaos");
+      if (demoBtn) {
+        demoBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          AudioEngine.blip(1100, 0.2);
+          if (!chaosTriggered) {
+            chaosTriggered = true;
+            startGradualEntropyPipeline();
+          }
+          chaosLevel = 21;
+          updateChaosDisplay();
+          requestBrowserFullscreen();
+          spawnWaiverButton();
+        });
+      }
+
+      const chaosHud = document.querySelector(".chaos-hud-widget");
+      if (chaosHud) {
+        chaosHud.style.cursor = "pointer";
+        chaosHud.setAttribute("title", "Click to increment Chaos Level (+5)");
+        chaosHud.addEventListener("click", (e) => {
+          e.stopPropagation();
+          AudioEngine.blip(850, 0.15);
+          if (!chaosTriggered) {
+            chaosTriggered = true;
+            startGradualEntropyPipeline();
+          }
+          chaosLevel += 5;
+          updateChaosDisplay();
+          checkFullscreenCaptiveActivation();
+        });
+      }
+    }
+    setTimeout(initChaosTriggers, 50);
 
     /* =========================================================
        3. PRODUCTS INVENTORY (Preserved Completely)
