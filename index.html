@@ -1399,6 +1399,382 @@
       transform: scale(1.3);
     }
 
+    /* The Terms & Conditions Captcha Maze Styles */
+    .terms-wrapper-row {
+      position: relative;
+      margin: 16px 0;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1.5px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      transition: margin-bottom 0.35s ease, border-color 0.2s, background-color 0.2s;
+    }
+
+    .terms-wrapper-row.open {
+      margin-bottom: 390px;
+      border-color: rgba(255, 98, 72, 0.6);
+      background: rgba(255, 98, 72, 0.05);
+    }
+
+    .terms-wrapper-row.verified {
+      border-color: #00ff66;
+      background: rgba(0, 255, 102, 0.08);
+    }
+
+    .terms-styled-checkbox {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: #ff6248;
+      transform: scale(1.15);
+      margin: 0;
+    }
+
+    .terms-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #f1f5f9;
+      cursor: pointer;
+      user-select: none;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .terms-verified-badge {
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #00ff66;
+      background: rgba(0, 255, 102, 0.15);
+      border: 1px solid #00ff66;
+      padding: 2px 7px;
+      border-radius: 9999px;
+      letter-spacing: 0.05em;
+    }
+
+    /* Nested Maze Box (Tier 1) */
+    #nested-maze-box {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      z-index: 60;
+      background: #0a1324;
+      border: 1.5px solid #ff6248;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 98, 72, 0.25);
+      border-radius: 12px;
+      padding: 16px;
+      max-height: 370px;
+      overflow-y: auto;
+      box-sizing: border-box;
+      animation: mazeSlideDown 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes mazeSlideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .legal-waiver-container {
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 11.5px;
+      line-height: 1.55;
+      color: #cbd5e1;
+      max-height: 170px;
+      overflow-y: scroll;
+      margin-bottom: 14px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      text-align: justify;
+    }
+
+    .legal-waiver-container h4 {
+      margin: 8px 0 4px 0;
+      font-size: 11px;
+      color: #ffd000;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-family: inherit;
+    }
+
+    .legal-waiver-container h4:first-child {
+      margin-top: 0;
+    }
+
+    .tier2-checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      background: rgba(255, 98, 72, 0.1);
+      border: 1px dashed rgba(255, 98, 72, 0.4);
+      border-radius: 8px;
+    }
+
+    .tier2-checkbox {
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+      accent-color: #ff6248;
+    }
+
+    .tier2-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #fca5a5;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* Tier 2: Rotating Puzzle */
+    .maze-tier2-container {
+      margin-top: 10px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .puzzle-header {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #00f0ff;
+      margin-bottom: 10px;
+    }
+
+    .puzzle-graphic-wrap {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      background: radial-gradient(circle, rgba(0, 240, 255, 0.12) 0%, rgba(10, 19, 36, 0.8) 100%);
+      border-radius: 50%;
+      border: 1.5px solid rgba(0, 240, 255, 0.3);
+    }
+
+    .alignment-target-shape {
+      width: 68px;
+      height: 68px;
+      transition: transform 0.05s linear;
+      transform-origin: center center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .corporate-matrix-svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .alignment-reticle {
+      position: absolute;
+      top: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 10px;
+      border-top: 3px solid #00f0ff;
+      pointer-events: none;
+    }
+
+    .alignment-slider-wrap {
+      width: 100%;
+      max-width: 280px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 10px;
+    }
+
+    .slider-angle-label {
+      font-size: 11px;
+      color: #94a3b8;
+      font-family: monospace;
+      font-weight: 700;
+    }
+
+    .alignment-range-slider {
+      width: 100%;
+      accent-color: #00f0ff;
+      cursor: pointer;
+    }
+
+    .alignment-status-text {
+      font-size: 11.5px;
+      color: #e2e8f0;
+      line-height: 1.4;
+      font-weight: 600;
+      max-width: 320px;
+    }
+
+    .token-process-link {
+      display: inline-block;
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #00ff66;
+      background: rgba(0, 255, 102, 0.12);
+      border: 1px solid #00ff66;
+      padding: 6px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      animation: tokenPulse 1.2s infinite ease-in-out;
+    }
+
+    .token-process-link:hover {
+      background: #00ff66;
+      color: #032b10;
+      box-shadow: 0 0 14px #00ff66;
+    }
+
+    @keyframes tokenPulse {
+      0%, 100% { box-shadow: 0 0 8px rgba(0, 255, 102, 0.3); }
+      50% { box-shadow: 0 0 20px rgba(0, 255, 102, 0.8); }
+    }
+
+    /* Tier 3: Math Punishment Wall */
+    .maze-tier3-container {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+    }
+
+    .quiz-header .quiz-badge {
+      font-size: 10px;
+      font-weight: 900;
+      color: #ffd000;
+      background: rgba(255, 208, 0, 0.15);
+      border: 1px solid #ffd000;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      letter-spacing: 0.1em;
+    }
+
+    .quiz-question {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.4;
+    }
+
+    .quiz-timer-wrap {
+      width: 100%;
+      max-width: 300px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quiz-timer-track {
+      flex: 1;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 9999px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .quiz-timer-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #ef4444, #ffd000);
+      border-radius: 9999px;
+      transition: width 0.05s linear;
+    }
+
+    .quiz-countdown-label {
+      font-family: monospace;
+      font-size: 13px;
+      font-weight: 900;
+      color: #ffd000;
+      min-width: 38px;
+      text-align: right;
+    }
+
+    .quiz-input-row {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+      max-width: 240px;
+    }
+
+    .quiz-input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      text-align: center;
+      outline: none;
+    }
+
+    .quiz-input:focus {
+      border-color: #ffd000;
+      box-shadow: 0 0 12px rgba(255, 208, 0, 0.4);
+    }
+
+    .quiz-submit-btn {
+      background: #ffd000;
+      color: #1a1000;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-weight: 900;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    .quiz-status-msg {
+      font-size: 11px;
+      color: #94a3b8;
+      font-style: italic;
+    }
+
+    /* Warning Yellow Flash on Modal */
+    @keyframes breach-yellow-flash {
+      0%, 100% {
+        border-color: #ffd000 !important;
+        box-shadow: 0 0 45px rgba(255, 208, 0, 0.95), inset 0 0 25px rgba(255, 208, 0, 0.5) !important;
+      }
+      50% {
+        border-color: #ff2a85 !important;
+        box-shadow: 0 0 60px rgba(255, 42, 133, 0.5) !important;
+      }
+    }
+
+    .modal-breach-flash {
+      animation: breach-yellow-flash 0.3s 4 ease-in-out !important;
+    }
+
     /* Biometric Fingerprint Scanner Component */
     .biometric-scanner-container {
       background: rgba(15, 23, 42, 0.7);
@@ -3641,9 +4017,102 @@
 
         <form id="checkout-form" onsubmit="return false;">
           <div class="form-group">
+            <label>Cardholder Full Name</label>
+            <input type="text" id="cardholder-input" class="form-input" placeholder="Legal name as appears on birth certificate..." autocomplete="off" />
+          </div>
+
+          <div class="form-group">
+            <label>Delivery Address</label>
+            <input type="text" id="address-input" class="form-input" placeholder="Physical residence or emergency bunker..." autocomplete="off" />
+          </div>
+
+          <div class="form-group">
             <label>Credit Card Number (Laggy Slippery Input Engine)</label>
             <input type="text" id="cc-input" class="form-input" placeholder="Type card number..." autocomplete="off" />
             <div id="virtual-keyboard"></div>
+          </div>
+
+          <!-- THE TERMS & CONDITIONS CAPTCHA MAZE -->
+          <div id="terms-wrapper-row" class="terms-wrapper-row">
+            <input type="checkbox" id="fake-terms-checkbox" class="terms-styled-checkbox" />
+            <label for="fake-terms-checkbox" class="terms-label">
+              <span>I agree to the Terms, Conditions, and Dynamic Surcharges</span>
+              <span id="terms-verified-status"></span>
+            </label>
+
+            <!-- Tier 1: Nested Maze Container -->
+            <div id="nested-maze-box" style="display: none;">
+              <!-- Tier 1 View: Legal Waiver -->
+              <div id="maze-tier1-view">
+                <div class="legal-waiver-container">
+                  <h4>SECTION 1.1: GENERAL INDEMNIFICATION AND EXISTENTIAL SURCHARGES</h4>
+                  <p>By initiating this transaction with Oops!Mart Global Logistics LLC, the consumer ("User", "Biological Entity", or "Aggrieved Party") irrevocably waives all constitutional, statutory, and common-law protections regarding item condition, physical gravity, spontaneous packaging combustion, and timeline displacement. All prices displayed are purely advisory and subject to dynamic arbitrary inflation of up to 4,800% based on atmospheric barometric pressure, lunar phases, and server mood.</p>
+                  <h4>SECTION 1.2: LIQUID CASCADE AND PERISHABLE ASSET PROTOCOLS</h4>
+                  <p>User explicitly acknowledges that all dairy acquisitions, including but not limited to Sentient Fresh Milk (Product SKU #003), possess autonomous locomotion rights and may refuse delivery, spill across local optical interfaces, or consume adjacent pantry goods without compensation. Oops!Mart disclaims all liability for soaked floorboards, sticky monitor glass, and metaphysical dread induced by rebellious dairy products.</p>
+                  <h4>SECTION 1.3: SUB-SURFACE HARDWARE LIENS AND BIOMETRIC HARVESTING</h4>
+                  <p>Consumer grants Oops!Mart perpetual, royalty-free access to all available capacitive touch sensors, camera lenses, monitor display pixels, and micro-texture ridge scanners. Failure to thoroughly wipe display glass with an approved chamois cloth constitutes willful breach of contract, resulting in immediate forfeiture of cart contents and mandatory re-verification through recursive mathematical punishment sequences.</p>
+                  <h4>SECTION 1.4: SURCHARGE AMORTIZATION AND TIME DIALATION CLAUSE</h4>
+                  <p>Any attempt to deselect optional non-refundable premium air packaging ($299.99) automatically activates our double-negative paradoxical consent waiver. Time elapsed during checkout execution shall be deducted from consumer's cumulative life expectancy at standard federal interest rates. Corporate reserves the right to substitute purchased goods with dehydrated vapor, used bubble wrap, or heavy emotional overcoats without prior notice. By proceeding past this clause, you solemnly affirm under penalty of digital perjury that you are not an automated scraper, search spider, sentient algorithm, or carbon-based organism with unrealistic expectations of e-commerce convenience. All rights reserved.</p>
+                </div>
+
+                <div class="tier2-checkbox-row">
+                  <input type="checkbox" id="tier2-captcha-checkbox" class="tier2-checkbox" />
+                  <label for="tier2-captcha-checkbox" class="tier2-label">
+                    Verify you are a real breathing consumer reading this text block
+                  </label>
+                </div>
+              </div>
+
+              <!-- Tier 2 View: Rotating Corporate Matrix Puzzle -->
+              <div id="maze-tier2-container" class="maze-tier2-container" style="display: none;">
+                <div class="puzzle-header">BIOLOGICAL MATRIX ALIGNMENT</div>
+                <div class="puzzle-graphic-wrap">
+                  <div id="alignment-target-shape" class="alignment-target-shape" style="transform: rotate(140deg);">
+                    <svg viewBox="0 0 100 100" class="corporate-matrix-svg">
+                      <polygon points="50,5 90,25 90,75 50,95 10,75 10,25" stroke="#ff6248" stroke-width="3" fill="rgba(255, 98, 72, 0.15)" />
+                      <line x1="50" y1="5" x2="50" y2="95" stroke="#00f0ff" stroke-width="2" stroke-dasharray="4,3" />
+                      <line x1="10" y1="50" x2="90" y2="50" stroke="#00f0ff" stroke-width="2" stroke-dasharray="4,3" />
+                      <circle cx="50" cy="50" r="16" stroke="#ffd000" stroke-width="2.5" fill="none" />
+                      <rect x="42" y="20" width="16" height="16" stroke="#ff2a85" stroke-width="2" fill="none" />
+                      <line x1="50" y1="5" x2="50" y2="20" stroke="#ffd000" stroke-width="3" />
+                      <polygon points="50,2 54,9 46,9" fill="#00ff66" />
+                    </svg>
+                  </div>
+                  <div class="alignment-reticle"></div>
+                </div>
+                <div class="alignment-slider-wrap">
+                  <label class="slider-angle-label">Current Offset: <span id="alignment-angle-display">140°</span></label>
+                  <input type="range" id="alignment-slider" min="0" max="360" value="140" class="alignment-range-slider" />
+                </div>
+                <div id="alignment-status-text" class="alignment-status-text">
+                  Align the corporate structural matrix to precisely 0 degrees to confirm biological identity.
+                </div>
+                <div id="token-proc-link-wrap" style="display: none; margin-top: 12px; text-align: center;">
+                  <a href="javascript:void(0)" id="token-process-link" class="token-process-link">Click here to process validation tokens.</a>
+                </div>
+              </div>
+
+              <!-- Tier 3 View: Mental Arithmetic Punishment Wall -->
+              <div id="maze-tier3-container" class="maze-tier3-container" style="display: none;">
+                <div class="quiz-header">
+                  <span class="quiz-badge">RAPID-FIRE BIOLOGICAL ARITHMETIC</span>
+                </div>
+                <div class="quiz-question">
+                  Solve within 5 seconds: What is the square root of 144 multiplied by 3?
+                </div>
+                <div class="quiz-timer-wrap">
+                  <div class="quiz-timer-track">
+                    <div id="quiz-timer-bar" class="quiz-timer-bar" style="width: 100%;"></div>
+                  </div>
+                  <div id="quiz-countdown-label" class="quiz-countdown-label">5.0s</div>
+                </div>
+                <div class="quiz-input-row">
+                  <input type="number" id="math-quiz-input" class="quiz-input" placeholder="Answer..." autocomplete="off" />
+                  <button type="button" id="btn-submit-math-quiz" class="quiz-submit-btn">Verify</button>
+                </div>
+                <div id="quiz-status-msg" class="quiz-status-msg">Type quickly before emergency memory wipe!</div>
+              </div>
+            </div>
           </div>
 
           <div class="form-group">
@@ -3970,8 +4439,211 @@
       window.addEventListener("touchend", onWindowTouchEnd);
       window.addEventListener("touchcancel", onWindowTouchEnd);
 
+      // =========================================================
+      // THE TERMS & CONDITIONS CAPTCHA MAZE ENGINE
+      // =========================================================
+      const termsWrapperRow = win.querySelector("#terms-wrapper-row");
+      const fakeTermsCheckbox = win.querySelector("#fake-terms-checkbox");
+      const nestedMazeBox = win.querySelector("#nested-maze-box");
+      const tier1View = win.querySelector("#maze-tier1-view");
+      const tier2Checkbox = win.querySelector("#tier2-captcha-checkbox");
+      const tier2Container = win.querySelector("#maze-tier2-container");
+      const alignmentTargetShape = win.querySelector("#alignment-target-shape");
+      const alignmentSlider = win.querySelector("#alignment-slider");
+      const alignmentAngleDisplay = win.querySelector("#alignment-angle-display");
+      const alignmentStatusText = win.querySelector("#alignment-status-text");
+      const tokenProcLinkWrap = win.querySelector("#token-proc-link-wrap");
+      const tokenProcessLink = win.querySelector("#token-process-link");
+      const tier3Container = win.querySelector("#maze-tier3-container");
+      const quizTimerBar = win.querySelector("#quiz-timer-bar");
+      const quizCountdownLabel = win.querySelector("#quiz-countdown-label");
+      const mathQuizInput = win.querySelector("#math-quiz-input");
+      const btnSubmitMathQuiz = win.querySelector("#btn-submit-math-quiz");
+      const termsVerifiedStatus = win.querySelector("#terms-verified-status");
+
+      let termsVerified = false;
+      let mathTimer = null;
+      let timeRemainingMs = 5000;
+      const totalTimeMs = 5000;
+
+      // 1. THE DECEPTIVE TARGET ANCHOR: Subversion Intercept
+      const handleFakeTermsAction = (e) => {
+        if (termsVerified) {
+          fakeTermsCheckbox.checked = true;
+          return;
+        }
+        e.preventDefault();
+        fakeTermsCheckbox.checked = false;
+
+        // 2. LAUNCHING THE NESTED MAZE CONTAINER (Tier 1)
+        const isHidden = nestedMazeBox.style.display === "none";
+        if (isHidden) {
+          nestedMazeBox.style.display = "block";
+          termsWrapperRow.classList.add("open");
+          AudioEngine.blip(480, 0.08);
+        } else {
+          nestedMazeBox.style.display = "none";
+          termsWrapperRow.classList.remove("open");
+        }
+      };
+
+      fakeTermsCheckbox.addEventListener("click", handleFakeTermsAction);
+      fakeTermsCheckbox.addEventListener("change", handleFakeTermsAction);
+
+      // 3. THE INTERACTIVE ROTATING PUZZLE (Tier 2)
+      const handleTier2Action = (e) => {
+        e.preventDefault();
+        tier2Checkbox.checked = false;
+        tier1View.style.display = "none";
+        tier2Container.style.display = "flex";
+        AudioEngine.blip(620, 0.08);
+      };
+
+      tier2Checkbox.addEventListener("click", handleTier2Action);
+      tier2Checkbox.addEventListener("change", handleTier2Action);
+
+      alignmentSlider.addEventListener("input", (e) => {
+        const val = parseInt(e.target.value, 10);
+        alignmentTargetShape.style.transform = `rotate(${val}deg)`;
+        alignmentAngleDisplay.textContent = `${val}°`;
+
+        // Strict validation check: angle between -3 and +3 degrees (0 to 360 mapped)
+        const normAngle = val > 180 ? val - 360 : val;
+        const isAligned = (normAngle >= -3 && normAngle <= 3);
+
+        if (isAligned) {
+          tokenProcLinkWrap.style.display = "block";
+          alignmentStatusText.textContent = "Alignment verified: 0° nominal. Corporate matrix stabilized.";
+          alignmentStatusText.style.color = "#00ff66";
+          AudioEngine.blip(880, 0.05);
+        } else {
+          tokenProcLinkWrap.style.display = "none";
+          alignmentStatusText.textContent = "Align the corporate structural matrix to precisely 0 degrees to confirm biological identity.";
+          alignmentStatusText.style.color = "#e2e8f0";
+        }
+      });
+
+      // 4. THE MATH COUNTER PUNISHMENT WALL (Tier 3)
+      function triggerBreachReset() {
+        if (mathTimer) {
+          clearInterval(mathTimer);
+          mathTimer = null;
+        }
+
+        // Emergency buzzer sound
+        AudioEngine.alarm();
+
+        // Flash modal border in warning yellow
+        win.classList.add("modal-breach-flash");
+        setTimeout(() => win.classList.remove("modal-breach-flash"), 1600);
+
+        // Completely wipe out and reset all text inputs in entire checkout form
+        win.querySelectorAll("input[type='text'], input[type='number']").forEach(input => {
+          input.value = "";
+        });
+
+        // Collapse #nested-maze-box back to hidden
+        nestedMazeBox.style.display = "none";
+        termsWrapperRow.classList.remove("open");
+
+        // Reset internal maze view states
+        tier1View.style.display = "block";
+        tier2Container.style.display = "none";
+        tier3Container.style.display = "none";
+        tokenProcLinkWrap.style.display = "none";
+        alignmentSlider.value = "140";
+        alignmentTargetShape.style.transform = "rotate(140deg)";
+        alignmentAngleDisplay.textContent = "140°";
+        tier2Checkbox.checked = false;
+        fakeTermsCheckbox.checked = false;
+      }
+
+      function startMathTimer() {
+        if (mathTimer) clearInterval(mathTimer);
+        timeRemainingMs = 5000;
+        quizTimerBar.style.width = "100%";
+        quizCountdownLabel.textContent = "5.0s";
+
+        const tickInterval = 50;
+        mathTimer = setInterval(() => {
+          timeRemainingMs -= tickInterval;
+          if (timeRemainingMs <= 0) {
+            timeRemainingMs = 0;
+            quizTimerBar.style.width = "0%";
+            quizCountdownLabel.textContent = "0.0s";
+            triggerBreachReset();
+          } else {
+            const pct = (timeRemainingMs / totalTimeMs) * 100;
+            quizTimerBar.style.width = `${pct.toFixed(1)}%`;
+            quizCountdownLabel.textContent = `${(timeRemainingMs / 1000).toFixed(1)}s`;
+          }
+        }, tickInterval);
+      }
+
+      function checkMathQuiz() {
+        const answer = mathQuizInput.value.trim();
+        if (answer === "36") {
+          // SUCCESS MODE: Sqrt(144) * 3 = 12 * 3 = 36
+          if (mathTimer) {
+            clearInterval(mathTimer);
+            mathTimer = null;
+          }
+          termsVerified = true;
+          fakeTermsCheckbox.checked = true;
+          fakeTermsCheckbox.disabled = true;
+
+          termsWrapperRow.classList.add("verified");
+          nestedMazeBox.style.display = "none";
+          termsWrapperRow.classList.remove("open");
+
+          if (termsVerifiedStatus) {
+            termsVerifiedStatus.className = "terms-verified-badge";
+            termsVerifiedStatus.textContent = "✓ BIOLOGICALLY VERIFIED";
+          }
+
+          AudioEngine.blip(900, 0.15);
+          AudioEngine.blip(1350, 0.25);
+        } else {
+          // Incorrect integer submitted
+          triggerBreachReset();
+        }
+      }
+
+      tokenProcessLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        tier2Container.style.display = "none";
+        tier3Container.style.display = "flex";
+        mathQuizInput.value = "";
+        mathQuizInput.focus();
+        startMathTimer();
+      });
+
+      btnSubmitMathQuiz.addEventListener("click", checkMathQuiz);
+      mathQuizInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          checkMathQuiz();
+        }
+      });
+      mathQuizInput.addEventListener("input", () => {
+        const val = mathQuizInput.value.trim();
+        if (val === "36") {
+          checkMathQuiz();
+        } else if (val.length >= 2 && val !== "36") {
+          checkMathQuiz();
+        }
+      });
+
       const nextBtn = win.querySelector("#btn-next-step");
       nextBtn.addEventListener("click", () => {
+        // Enforce Terms & Conditions Captcha Maze completion before proceeding
+        if (!termsVerified) {
+          AudioEngine.blip(180, 0.3);
+          termsWrapperRow.classList.add("modal-breach-flash");
+          setTimeout(() => termsWrapperRow.classList.remove("modal-breach-flash"), 1200);
+          return;
+        }
+
         // Biometric verification gate: block authorization
         AudioEngine.blip(180, 0.3);
         scannerStatus.classList.add("error");

@@ -89,8 +89,26 @@ Built with zero external CSS/UI frameworks, an inline Web Audio synthesizer, an 
 - **Release Interruption**:
   - Releasing touch/click before 99% clears all active tickers, resets progress to `0%`, and logs:
     - *"Status: Connection severed. Re-align thumb contact point."*
-- **Submission Gate Interceptor**:
-  - Clicking "Proceed to Emotional Verification" (`#btn-next-step`) blocks authorization until 100% biometric verification is achieved, permanently gating checkout.
+### 8. The Terms & Conditions Captcha Maze (Multi-Tier Nested Validation Gauntlet)
+- **Positioning**: Directly underneath Credit Card text fields in the Checkout Form (`<div id="terms-wrapper-row">`).
+- **The Deceptive Target Anchor (Tier 1 Intercept)**:
+  - Standard checkbox (`<input type="checkbox" id="fake-terms-checkbox">`) labeled *"I agree to the Terms, Conditions, and Dynamic Surcharges"*.
+  - Clicking intercepts the event via `e.preventDefault()`, keeping the checkbox unchecked and triggering an animated layout-opening accordion drawer (`#nested-maze-box`).
+- **Legal Waiver & Sub-Tier Verification**:
+  - Dense 300-word legal waiver block detailing dynamic arbitrary inflation, sentient milk property damage, and recursive math liabilities.
+  - Sub-tier checkbox at the bottom: `<input type="checkbox" id="tier2-captcha-checkbox">` labeled *"Verify you are a real breathing consumer reading this text block"*.
+- **The Interactive Rotating Puzzle (Tier 2)**:
+  - Clicking `#tier2-captcha-checkbox` intercepts default behavior and launches the graphical corporate structural matrix puzzle (`#maze-tier2-container`).
+  - Rotates an SVG corporate matrix polygon initially offset at `140deg` controlled by an HTML range slider (`<input type="range" id="alignment-slider" min="0" max="360">`).
+  - Strict validation check: Only when slider aligns within `[-3°, +3°]` degrees of 0° is the token link revealed: *"Click here to process validation tokens."*
+- **The Math Counter Punishment Wall (Tier 3)**:
+  - Mental arithmetic pop quiz: *"Solve within 5 seconds: What is the square root of 144 multiplied by 3?"* (`36`).
+  - 5-second rapid countdown progress bar ticking down via a localized `setInterval` loop.
+  - **The Reset Trap**: If the timer hits 0 before answering or if an incorrect number is entered:
+    - Emergency alarm sounds and modal borders flash in warning yellow (`.modal-breach-flash`).
+    - Entire checkout form text inputs (credit card, cardholder name, address, etc.) are wiped clean.
+    - `#nested-maze-box` collapses, forcing the user to re-enter all data from scratch.
+  - **Success Mode**: Answering `36` within 5 seconds locks `#fake-terms-checkbox` to `checked = true`, disables deselection, displays a `✓ BIOLOGICALLY VERIFIED` badge, and allows proceeding.
 
 ---
 
