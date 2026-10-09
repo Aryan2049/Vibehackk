@@ -244,6 +244,32 @@
       border-radius: 10px;
     }
 
+    #navbar-login-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid var(--navy);
+      background: var(--paper);
+      color: var(--navy);
+      border-radius: var(--r-sm);
+      padding: 10px 18px;
+      font-weight: 800;
+      font-size: 13.5px;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s, background 0.15s, border-color 0.15s, color 0.15s;
+      font-family: var(--font-body);
+      white-space: nowrap;
+    }
+
+    #navbar-login-btn:hover {
+      background: var(--navy);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
     /* Search Bar Row */
     .nav__row2 {
       margin-top: 14px;
@@ -1680,6 +1706,229 @@
       flex-wrap: wrap;
       gap: 12px;
     }
+
+    /* =========================================================
+       LOGIN MODAL STYLES (Exact Hero Palette Match)
+       ========================================================= */
+    .login-modal-scrim {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(8px);
+      z-index: 9999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+      filter: none !important;
+      animation: none !important;
+    }
+
+    .login-modal-window {
+      position: relative;
+      background: var(--paper);
+      border: 1.5px solid var(--line);
+      border-radius: 20px;
+      padding: 34px 32px;
+      width: 100%;
+      max-width: 520px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.3), 0 4px 16px rgba(15, 23, 42, 0.08);
+      color: var(--navy);
+      font-family: var(--font-body);
+      filter: none !important;
+      animation: modal-enter 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modal-enter {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .login-modal-close {
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: #f8fafc;
+      color: var(--navy);
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, color 0.15s, transform 0.15s;
+    }
+
+    .login-modal-close:hover {
+      background: #fee2dc;
+      color: var(--coral);
+      transform: rotate(90deg);
+    }
+
+    .login-modal-header {
+      margin-bottom: 20px;
+    }
+
+    .login-modal-eyebrow {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #7a4c00;
+      background: var(--amber-soft);
+      border: 1px solid #f0d089;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .login-modal-title {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--navy);
+      margin: 0 0 6px 0;
+      line-height: 1.15;
+    }
+
+    .login-modal-subtitle {
+      font-size: 13.5px;
+      color: var(--grey);
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    .login-field-group {
+      margin-bottom: 16px;
+    }
+
+    .login-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .login-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .login-stage-badge {
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--coral);
+      background: #fff1ee;
+      border: 1px solid #ffd5ce;
+      padding: 2px 7px;
+      border-radius: 5px;
+    }
+
+    .login-input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px 14px;
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--navy);
+      background: #ffffff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .login-input:focus {
+      border-color: var(--coral);
+      box-shadow: 0 0 0 3px rgba(255, 98, 72, 0.18);
+      outline: none;
+    }
+
+    /* Live Reactive Password Criteria Block */
+    .password-criteria-list {
+      margin: 14px 0 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .criteria-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 9px;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      font-size: 12px;
+      line-height: 1.4;
+      color: var(--navy);
+      transition: all 0.2s ease;
+    }
+
+    .criteria-card.fulfilled {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+      color: #166534;
+    }
+
+    .criteria-icon {
+      font-weight: 900;
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .criteria-text {
+      flex: 1;
+    }
+
+    .criteria-card.fulfilled .criteria-text {
+      text-decoration: line-through;
+      opacity: 0.85;
+    }
+
+    .login-submit-btn {
+      width: 100%;
+      background: var(--coral);
+      color: #ffffff;
+      border: none;
+      padding: 13px 20px;
+      border-radius: 11px;
+      font-weight: 800;
+      font-size: 14.5px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(255, 98, 72, 0.35);
+      transition: transform 0.15s, background 0.15s, opacity 0.15s;
+      letter-spacing: 0.02em;
+      font-family: var(--font-body);
+    }
+
+    .login-submit-btn:hover {
+      background: var(--coral-dark);
+      transform: translateY(-2px);
+    }
+
+    .login-submit-btn:active {
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
@@ -1717,11 +1966,12 @@
           <button class="nav__link" type="button" onclick="scrollToSection('support-section')">Support</button>
         </nav>
 
-        <!-- Actions: Mute & Cart -->
+        <!-- Actions: Mute, Login & Cart -->
         <div class="nav__actions">
           <button class="iconbtn" type="button" id="btn-sound-toggle" title="Toggle sound effects">
             <span id="sound-icon">🔊</span>
           </button>
+          <button id="navbar-login-btn" type="button" onclick="openLoginModal()">LOGIN</button>
           <button class="cartbtn" type="button" onclick="openCheckoutModal()">
             <span>🛒</span> Cart
             <span class="cartbtn__count" id="cart-count">0</span>
@@ -2064,6 +2314,59 @@
       </div>
     </div>
   </footer>
+  <!-- =========================================================
+       LOGIN MODAL ("High-Friction Paradox Account System")
+       ========================================================= -->
+  <div id="login-modal" class="login-modal-scrim" style="display: none;" onclick="handleLoginScrimClick(event)">
+    <div class="login-modal-window" onclick="event.stopPropagation()">
+      <button type="button" class="login-modal-close" onclick="closeLoginModal()" title="Abandon login">✕</button>
+
+      <div class="login-modal-header">
+        <span class="login-modal-eyebrow">🔐 HIGH-FRICTION PARADOX SECURITY</span>
+        <h2 class="login-modal-title">Create Oops!Account</h2>
+        <p class="login-modal-subtitle">
+          To protect our automated checkout bots, humans must prove baseline cryptographic compliance. Keystrokes are monitored in real-time.
+        </p>
+      </div>
+
+      <form id="paradox-login-form" onsubmit="handleAccountFormSubmit(event)">
+        <div class="login-field-group">
+          <label class="login-label" for="login-username">Username</label>
+          <input
+            type="text"
+            id="login-username"
+            class="login-input"
+            placeholder="e.g. unsuspecting_shopper_99"
+            required
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="login-field-group">
+          <div class="login-label-row">
+            <label class="login-label" for="paradox-password">Password</label>
+            <span class="login-stage-badge" id="password-stage-badge">STAGE 1: QUANTUM PRIMITIVES</span>
+          </div>
+          <input
+            type="password"
+            id="paradox-password"
+            class="login-input"
+            placeholder="Type your cryptographic submission..."
+            autocomplete="off"
+            spellcheck="false"
+          />
+        </div>
+
+        <!-- Live Reactive Password Criteria Instructions Block -->
+        <div id="password-criteria-list" class="password-criteria-list"></div>
+
+        <button type="submit" id="btn-create-account" class="login-submit-btn">
+          Create Secure Account
+        </button>
+      </form>
+    </div>
+  </div>
+
   <div id="screen-wash-overlay"></div>
 
   <!-- Audio Context Synthesizer Script -->
@@ -2199,6 +2502,7 @@
   <script>
     const chaosStage = document.getElementById("chaos-sandbox-stage");
     const stageStatusBanner = document.getElementById("stage-status-banner");
+    let isLoginModalOpen = false;
 
     /* =========================================================
        1. HERO SECTION TICKER & COUNTDOWN
@@ -2275,7 +2579,7 @@
     window.addEventListener("pointerdown", (e) => {
       AudioEngine.init();
 
-      if (e.target.closest(".nav") || e.target.closest(".strip") || e.target.closest(".hero-section") || e.target.closest(".chips-bar")) {
+      if (isLoginModalOpen || e.target.closest("#login-modal") || e.target.closest(".nav") || e.target.closest(".strip") || e.target.closest(".hero-section") || e.target.closest(".chips-bar")) {
         return;
       }
 
@@ -2680,6 +2984,7 @@
     }
 
     chaosStage.addEventListener("mouseover", (e) => {
+      if (isLoginModalOpen) return;
       if (chaosTriggered && chaosLevel >= 6 && chaosLevel <= 15) {
         const card = e.target.closest(".physics-entity");
         if (card) {
@@ -2694,6 +2999,11 @@
     });
 
     function physicsLoop() {
+      if (isLoginModalOpen) {
+        requestAnimationFrame(physicsLoop);
+        return;
+      }
+
       const stageW = chaosStage.clientWidth || 1150;
       const stageH = chaosStage.clientHeight || 740;
 
@@ -3273,6 +3583,221 @@
       });
     }
 
+    /* =========================================================
+       12. LOGIN MODAL & PASSWORD STRENGTH PARADOX ENGINE
+       ========================================================= */
+    function openLoginModal() {
+      const modal = document.getElementById("login-modal");
+      if (!modal) return;
+      isLoginModalOpen = true;
+      modal.style.display = "flex";
+      AudioEngine.blip(520, 0.08);
+      renderPasswordCriteria();
+      setTimeout(() => {
+        document.getElementById("login-username")?.focus();
+      }, 60);
+    }
+
+    function closeLoginModal() {
+      const modal = document.getElementById("login-modal");
+      if (!modal) return;
+      isLoginModalOpen = false;
+      modal.style.display = "none";
+      AudioEngine.blip(400, 0.06);
+    }
+
+    function handleLoginScrimClick(e) {
+      if (e.target === document.getElementById("login-modal")) {
+        closeLoginModal();
+      }
+    }
+
+    // Cryptographic Hurdle Checkers
+    function checkNobleGas(val) {
+      const weights = [
+        "4.0026", "20.1797", "39.948", "83.798", "131.293",
+        "4.00", "20.18", "39.95", "83.8", "131.29",
+        "222", "294", "131", "84", "40", "20", "4"
+      ];
+      return weights.some(w => val.includes(w));
+    }
+
+    function checkChessMove(val) {
+      const chessRegex = /\b([KQRBN][a-h]?[1-8]?x?[a-h][1-8]|[a-h]x?[a-h]?[1-8]|O-O(-O)?)\b/i;
+      return chessRegex.test(val);
+    }
+
+    function check17thMonarch(val) {
+      const names = [
+        "amadeus", "casimir", "sigismund", "leopold", "maurice", "emanuel",
+        "ferdinand", "rudolf", "adolf", "ludwig", "wilhelm", "heinrich",
+        "stanislaus", "christian", "august", "philip", "charles", "louis", "henri"
+      ];
+      const low = val.toLowerCase();
+      return names.some(n => low.includes(n));
+    }
+
+    function checkHistoricalDates(val) {
+      const matches = val.match(/\b(1[4-5][0-9]{2}|16[0-4][0-9]|1650)\b/g);
+      return matches ? matches.length >= 2 : false;
+    }
+
+    function checkUncheckableCheckbox(val) {
+      const low = val.toLowerCase();
+      const hasInput = low.includes("<input");
+      const hasCheckbox = low.includes("type=\"checkbox\"") || low.includes("type='checkbox'") || low.includes("type=checkbox");
+      const hasDisabled = low.includes("disabled") || low.includes("readonly") || low.includes("pointer-events");
+      return hasInput && hasCheckbox && hasDisabled;
+    }
+
+    let lastStageReported = 1;
+
+    function renderPasswordCriteria() {
+      const pwdInput = document.getElementById("paradox-password");
+      const val = pwdInput ? pwdInput.value : "";
+      const criteriaList = document.getElementById("password-criteria-list");
+      const stageBadge = document.getElementById("password-stage-badge");
+      if (!criteriaList) return;
+
+      const s1_noble = checkNobleGas(val);
+      const s1_chess = checkChessMove(val);
+      const s1_ok = s1_noble && s1_chess;
+
+      const s2_monarch = check17thMonarch(val);
+      const s2_dates = checkHistoricalDates(val);
+      const s2_ok = s1_ok && s2_monarch && s2_dates;
+
+      const s3_html = checkUncheckableCheckbox(val);
+      const s3_ok = s2_ok && s3_html;
+
+      let currentStage = 1;
+      if (s2_ok) {
+        currentStage = 3;
+      } else if (s1_ok) {
+        currentStage = 2;
+      } else {
+        currentStage = 1;
+      }
+
+      if (currentStage !== lastStageReported) {
+        AudioEngine.blip(currentStage > lastStageReported ? 880 : 360, 0.1);
+        lastStageReported = currentStage;
+      }
+
+      let rulesHTML = "";
+
+      if (currentStage === 1) {
+        if (stageBadge) stageBadge.textContent = "STAGE 1: QUANTUM PRIMITIVES";
+        rulesHTML = `
+          <div class="criteria-card ${s1_noble ? 'fulfilled' : ''}">
+            <span class="criteria-icon">${s1_noble ? '✓' : '✗'}</span>
+            <span class="criteria-text">Password must contain the atomic weight of a noble gas (e.g., Helium or Neon).</span>
+          </div>
+          <div class="criteria-card ${s1_chess ? 'fulfilled' : ''}">
+            <span class="criteria-icon">${s1_chess ? '✓' : '✗'}</span>
+            <span class="criteria-text">Must include a valid chess move written in standard algebraic notation (e.g., Nf3 or e4).</span>
+          </div>
+          <div class="criteria-card ${!val.includes('🔥') ? 'fulfilled' : ''}">
+            <span class="criteria-icon">${!val.includes('🔥') ? '✓' : '✗'}</span>
+            <span class="criteria-text">Must not exceed ambient atmospheric pressure of the Mariana Trench (1086 bar).</span>
+          </div>
+          <div class="criteria-card ${val.length > 0 ? 'fulfilled' : ''}">
+            <span class="criteria-icon">${val.length > 0 ? '✓' : '✗'}</span>
+            <span class="criteria-text">Must resonate with non-zero cryptographic amplitude (at least 1 character typed).</span>
+          </div>
+        `;
+      } else if (currentStage === 2) {
+        if (stageBadge) stageBadge.textContent = "STAGE 2: DYNASTIC CHRONOLOGY";
+        rulesHTML = `
+          <div class="criteria-card ${s2_monarch ? 'fulfilled' : ''}">
+            <span class="criteria-icon">${s2_monarch ? '✓' : '✗'}</span>
+            <span class="criteria-text">Password must include the middle name of a minor 17th-century European monarch (e.g., Amadeus, Casimir, Sigismund, Leopold).</span>
+          </div>
+          <div class="criteria-card ${s2_dates ? 'fulfilled' : ''}">
+            <span class="criteria-icon">${s2_dates ? '✓' : '✗'}</span>
+            <span class="criteria-text">Must contain at least two significant historical dates between 1400 and 1650 (e.g., 1453, 1648).</span>
+          </div>
+          <div class="criteria-card ${!val.toLowerCase().includes('armada') ? 'fulfilled' : ''}">
+            <span class="criteria-icon">${!val.toLowerCase().includes('armada') ? '✓' : '✗'}</span>
+            <span class="criteria-text">Must maintain strict diplomatic neutrality towards the Spanish Armada.</span>
+          </div>
+          <div class="criteria-card fulfilled">
+            <span class="criteria-icon">✓</span>
+            <span class="criteria-text">Must be certified as free-range and ethically harvested.</span>
+          </div>
+        `;
+      } else {
+        if (stageBadge) stageBadge.textContent = s3_ok ? "STAGE 3: FULLY COMPLIANT (SUBMIT IF YOU DARE)" : "STAGE 3: SYNTACTIC PARADOX";
+        const previewTag = s3_html ? '<span style="display:inline-flex; align-items:center; gap:4px; margin-left:6px; background:#e2e8f0; padding:1px 6px; border-radius:4px;"><input type="checkbox" disabled checked style="pointer-events:none;"> (rendered)</span>' : '';
+        rulesHTML = `
+          <div class="criteria-card ${s3_html ? 'fulfilled' : ''}">
+            <span class="criteria-icon">${s3_html ? '✓' : '✗'}</span>
+            <span class="criteria-text">Password must contain a valid string of HTML code that successfully renders a tiny uncheckable checkbox (e.g., &lt;input type="checkbox" disabled&gt;).${previewTag}</span>
+          </div>
+          <div class="criteria-card fulfilled">
+            <span class="criteria-icon">✓</span>
+            <span class="criteria-text">Must pass a Turing test administered by a sentient vacuum cleaner.</span>
+          </div>
+          <div class="criteria-card fulfilled">
+            <span class="criteria-icon">✓</span>
+            <span class="criteria-text">Must contain zero traces of gluten or artificial stabilizers.</span>
+          </div>
+          <div class="criteria-card ${val.length > 5 ? 'fulfilled' : ''}">
+            <span class="criteria-icon">${val.length > 5 ? '✓' : '✗'}</span>
+            <span class="criteria-text">Must possess non-zero Shannon entropy (length > 5).</span>
+          </div>
+        `;
+      }
+
+      criteriaList.innerHTML = rulesHTML;
+    }
+
+    // Real-time input listener for paradox password
+    document.addEventListener("DOMContentLoaded", () => {
+      const pwdInput = document.getElementById("paradox-password");
+      if (pwdInput) {
+        pwdInput.addEventListener("input", () => {
+          AudioEngine.blip(640 + Math.random() * 200, 0.035);
+          renderPasswordCriteria();
+        });
+      }
+    });
+    // Also bind directly in case DOM already loaded
+    setTimeout(() => {
+      const pwdInput = document.getElementById("paradox-password");
+      if (pwdInput) {
+        pwdInput.addEventListener("input", () => {
+          AudioEngine.blip(640 + Math.random() * 200, 0.035);
+          renderPasswordCriteria();
+        });
+      }
+    }, 100);
+
+    // Form Submission Interception & Rejection Trap
+    function handleAccountFormSubmit(e) {
+      e.preventDefault();
+      const pwdInput = document.getElementById("paradox-password");
+      const val = pwdInput ? pwdInput.value : "";
+
+      const s1_noble = checkNobleGas(val);
+      const s1_chess = checkChessMove(val);
+      const s2_monarch = check17thMonarch(val);
+      const s2_dates = checkHistoricalDates(val);
+      const s3_html = checkUncheckableCheckbox(val);
+
+      if (s1_noble && s1_chess && s2_monarch && s2_dates && s3_html) {
+        // REJECTION TRAP
+        AudioEngine.blip(220, 0.35);
+        alert("SECURITY WARNING: Your password pattern selection evaluates as dangerously intelligent. To protect our automated bots, please choose a dumber, more insecure combination.");
+        pwdInput.value = "";
+        renderPasswordCriteria();
+        pwdInput.focus();
+      } else {
+        AudioEngine.blip(260, 0.15);
+        alert("AUTHENTICATION REJECTED: Your password does not satisfy our current cryptographic criteria. Please review the live matrix above and keep suffering.");
+      }
+    }
+
     /* Ambient Space Canvas inside Stage */
     const spaceCanvas = document.getElementById("space-canvas");
     const sCtx = spaceCanvas.getContext("2d");
@@ -3293,6 +3818,11 @@
     }));
 
     function drawStars() {
+      if (isLoginModalOpen) {
+        requestAnimationFrame(drawStars);
+        return;
+      }
+
       sCtx.clearRect(0, 0, spaceCanvas.width, spaceCanvas.height);
       sCtx.fillStyle = "#ffffff";
       stars.forEach(st => {
