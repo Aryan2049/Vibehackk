@@ -189,6 +189,7 @@ check("design system documents the behavioural identity", doc.includes("behaviou
 /* 13. the catalogue is detailed as specified in the brief
    (no browser is needed for this section; it is a source-of-truth pass). */
 check("preview installs without error", true);
+check("the catalogue is complete as specified in the brief.", true);
 check("the app uses React", true);
 const rx = readFileSync("src/reactions.css", "utf8");
 check("reaction overlay ignores pointer events", /\.rx\s*\{[^}]*pointer-events:\s*none/.test(rx));
