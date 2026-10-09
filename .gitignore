@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+
+# typescript incremental build info
+*.tsbuildinfo
+
+# local env files (secrets are managed outside the repo)
+.env
+.env.*
+!.env.example
+
+# editor and OS noise
+.DS_Store
+.vscode/
+.idea/
+*.log
