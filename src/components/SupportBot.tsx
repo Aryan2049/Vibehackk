@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent, type JSX } from "react";
 import { BOT_OPENING, BOT_TOPICS } from "../data/comedy";
+import { useDialogFocus } from "../hooks";
 
 interface SupportBotProps {
   open: boolean;
@@ -38,6 +39,8 @@ export function SupportBot({ open, onClose }: SupportBotProps): JSX.Element | nu
   const timers = useRef<number[]>([]);
   const logRef = useRef<HTMLDivElement>(null);
   const idRef = useRef(1);
+  const botRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(botRef, open, onClose);
 
   useEffect(() => {
     return () => {
@@ -77,7 +80,7 @@ export function SupportBot({ open, onClose }: SupportBotProps): JSX.Element | nu
   }
 
   return (
-    <div className="bot" role="dialog" aria-label="Oops!Mart support chat">
+    <div className="bot" ref={botRef} role="dialog" aria-label="Oops!Mart support chat">
       <div className="bot__head">
         <div className="bot__avatar" aria-hidden="true">
           🤖

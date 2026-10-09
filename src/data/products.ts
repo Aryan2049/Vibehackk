@@ -473,7 +473,7 @@ export const PRODUCTS: Product[] = [
     reactionTitle: "Foam Party",
     reactionMessage:
       "Congratulations. Your browser now has excellent hair. We have not worked out how to rinse a browser and at this stage we may never.",
-    recoveryLabel: "Rinse the bubbles",
+    recoveryLabel: "Clean up the foam",
     reviews: [
       { author: "Voluminous", stars: 5, text: "Fantastic shine. My partner is now mostly bubbles and seems calmer for it." },
       { author: "Rinsed Repeatedly", stars: 4, text: "Foam so thick I briefly lost a cat. The cat returned, cleaner, and refused to explain." },

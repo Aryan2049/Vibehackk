@@ -1,12 +1,14 @@
 import { useState, type CSSProperties, type JSX } from "react";
 import type { Product } from "../types";
 import { money } from "../store";
-import { REVIEW_JOKES } from "../data/comedy";
+import { CARD_STICKERS, IDLE_LABELS, REVIEW_JOKES } from "../data/comedy";
 import { ProductArt } from "./Art";
 
 interface ProductCardProps {
   product: Product;
   index: number;
+  /** True while this card holds the idle spotlight. */
+  idle?: boolean;
   onReact: (product: Product) => void;
   onAdd: (product: Product) => void;
 }
@@ -16,12 +18,19 @@ function stars(rating: number): string {
   return "★★★★★".slice(0, full) + "☆☆☆☆☆".slice(0, 5 - full);
 }
 
-export function ProductCard({ product, index, onReact, onAdd }: ProductCardProps): JSX.Element {
+export function ProductCard({ product, index, idle = false, onReact, onAdd }: ProductCardProps): JSX.Element {
   const [showReviews, setShowReviews] = useState(false);
   const [joke, setJoke] = useState<string | null>(null);
+
   const discount = product.oldPrice
     ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)
     : 0;
+
+  const sticker = product.oldPrice ? `-${discount}% off` : CARD_STICKERS[product.reaction];
+  const isDiscountSticker = Boolean(product.oldPrice);
+  const idleLabel = IDLE_LABELS[product.reaction];
+  const snippet = product.reviews[0]?.text ?? "";
+  const showMeter = idle && product.id === "laptop";
 
   function toggleReviews() {
     setShowReviews((s) => !s);
@@ -30,7 +39,8 @@ export function ProductCard({ product, index, onReact, onAdd }: ProductCardProps
 
   return (
     <article
-      className="card"
+      className={`card${idle ? " is-idle" : ""}`}
+      data-id={product.id}
       style={{ animationDelay: `${Math.min(index * 45, 400)}ms` } as CSSProperties}
     >
       <button
@@ -43,6 +53,8 @@ export function ProductCard({ product, index, onReact, onAdd }: ProductCardProps
         {product.tag ? <span className="card__tag">{product.tag}</span> : null}
         <span className="card__warn">{product.reactionKicker}</span>
         <ProductArt id={product.id} />
+        <span className={`card__sticker${isDiscountSticker ? " card__sticker--discount" : ""}`}>{sticker}</span>
+        {idle && idleLabel ? <span className="card__idle">{idleLabel}</span> : null}
         <span className="sr-only">Trigger the {product.reactionTitle} reaction</span>
       </button>
 
@@ -50,6 +62,21 @@ export function ProductCard({ product, index, onReact, onAdd }: ProductCardProps
         <div className="card__cat">{product.category}</div>
         <h3 className="card__name">{product.name}</h3>
         <p className="card__blurb">{product.blurb}</p>
+
+        <p className="card__snippet">
+          <b>Fictional review</b>
+          “{snippet}”
+        </p>
+
+        {showMeter ? (
+          <div className="meter" aria-hidden="true">
+            <div className="meter__label">
+              <span>Emotional stability</span>
+              <span>34%</span>
+            </div>
+            <div className="meter__fill" style={{ width: "34%" }} />
+          </div>
+        ) : null}
 
         <div className="card__row">
           <div className="price">
@@ -70,7 +97,7 @@ export function ProductCard({ product, index, onReact, onAdd }: ProductCardProps
         {showReviews ? (
           <div className="reviews">
             {joke ? (
-              <p className="review__text" style={{ color: "var(--coral-2)", fontStyle: "normal", fontWeight: 700 }}>
+              <p className="review__text" style={{ color: "var(--coral-ink)", fontStyle: "normal", fontWeight: 700 }}>
                 {joke}
               </p>
             ) : null}

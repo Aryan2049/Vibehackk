@@ -6,7 +6,7 @@
 .rx {
   position: fixed;
   inset: 0;
-  z-index: 110;
+  z-index: var(--z-overlay);
   pointer-events: none;
   overflow: hidden;
 }
@@ -54,7 +54,7 @@ body[data-reaction="mouse"] .app {
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--coral-2);
+  color: var(--coral-ink);
   margin-bottom: 5px;
 }
 
@@ -63,6 +63,7 @@ body[data-reaction="mouse"] .app {
   font-size: 22px;
   font-weight: 900;
   line-height: 1.1;
+  color: var(--navy);
 }
 
 .rx__msg {

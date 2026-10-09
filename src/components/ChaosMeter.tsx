@@ -26,7 +26,7 @@ export function ChaosMeter({ discovered, total = Object.keys(REACTIONS).length, 
   return (
     <div className="chaos" role="status">
       <div className="chaos__head">
-        <span>Chaos meter</span>
+        <span>Chaos level</span>
         <span className="chaos__val">{pct}%</span>
       </div>
       <div className="chaos__bar">

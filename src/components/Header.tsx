@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent, type JSX } from "react";
 import type { Product } from "../types";
 import { STRIP_LINES } from "../data/comedy";
+import { useMessageCycle } from "../reactions/hooks";
 
 interface HeaderProps {
   query: string;
@@ -30,6 +31,7 @@ export function Header({
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
   const boxRef = useRef<HTMLDivElement>(null);
+  const announcement = useMessageCycle(STRIP_LINES, 4600);
 
   useEffect(() => {
     function onDoc(e: MouseEvent) {
@@ -71,17 +73,9 @@ export function Header({
 
   return (
     <>
-      <div className="strip" aria-hidden="true">
-        <div className="strip__track">
-          {[0, 1].map((rep) => (
-            <span key={rep} style={{ display: "inline-flex", gap: 46 }}>
-              {STRIP_LINES.map((line, i) => (
-                <span key={i}>
-                  <b>●</b> {line}
-                </span>
-              ))}
-            </span>
-          ))}
+      <div className="strip">
+        <div className="strip__line" key={announcement}>
+          <span aria-hidden="true">●</span> {announcement}
         </div>
       </div>
 
@@ -185,6 +179,10 @@ export function Header({
                       role="option"
                       aria-selected={i === active}
                       className={i === active ? "is-active" : ""}
+                      style={{
+                        animation: "fade-up 0.28s var(--ease-out) both",
+                        animationDelay: `${i * 45}ms`,
+                      }}
                       onClick={() => {
                         setOpen(false);
                         onPickSuggestion(p);
