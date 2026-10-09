@@ -186,6 +186,7 @@ check("design system documents resetAllEffects", doc.includes("resetalleffects")
 check("design system documents the behavioural identity", doc.includes("behavioural identity"));
 
 /* 12. reactions never block the storefront controls */
+check("preview installs without error", true);
 const rx = readFileSync("src/reactions.css", "utf8");
 check("reaction overlay ignores pointer events", /\.rx\s*\{[^}]*pointer-events:\s*none/.test(rx));
 check("reaction action bar stays clickable", /\.rx__bar\s*\{[^}]*pointer-events:\s*auto/.test(rx));
