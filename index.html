@@ -2007,6 +2007,15 @@
       stroke: #ef4444 !important;
     }
 
+    #biometric-scanner-pad.scanner-success {
+      border: 2px solid #00ff66 !important;
+      box-shadow: 0 0 25px rgba(0, 255, 102, 0.65), inset 0 0 15px rgba(0, 255, 102, 0.4) !important;
+    }
+
+    #biometric-scanner-pad.scanner-success .biometric-svg {
+      stroke: #00ff66 !important;
+    }
+
     .scanner-progress-wrapper {
       width: 100%;
       margin-bottom: 12px;
@@ -2040,6 +2049,11 @@
       background: #ef4444 !important;
     }
 
+    .scanner-progress-fill.success {
+      background: #00ff66 !important;
+      box-shadow: 0 0 10px rgba(0, 255, 102, 0.7);
+    }
+
     .scanner-percentage-label {
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       font-size: 13px;
@@ -2051,6 +2065,10 @@
 
     .scanner-percentage-label.error {
       color: #ef4444 !important;
+    }
+
+    .scanner-percentage-label.success {
+      color: #00ff66 !important;
     }
 
     #scanner-status {
@@ -2077,6 +2095,12 @@
       color: #fca5a5 !important;
       border-color: rgba(239, 68, 68, 0.4) !important;
       background: rgba(239, 68, 68, 0.1) !important;
+    }
+
+    #scanner-status.success {
+      color: #86efac !important;
+      border-color: rgba(0, 255, 102, 0.5) !important;
+      background: rgba(0, 255, 102, 0.12) !important;
     }
 
     .submit-btn-real, .submit-btn-decoy {
@@ -4671,111 +4695,94 @@
       let progressTimer = null;
       let phraseTimer = null;
       let phraseIndex = 0;
-      let hasFailedAt99 = false;
+      let isBiometricVerified = false;
 
       const hardwarePhrases = [
         "Status: Surface matrix detected. Initializing optical alignment...",
         "Status: Capturing ridge detail contrast arrays...",
-        "Status: Parsing micro-textures against baseline grid..."
+        "Status: Parsing micro-textures against baseline grid...",
+        "Status: Calibrating epidermal dielectric constants...",
+        "Status: Authenticating biometric signature with mainframe..."
       ];
 
       function startScan(e) {
         if (e && e.type === "touchstart") {
           e.preventDefault();
         }
+        if (isBiometricVerified) return;
         if (isScanning) return;
         isScanning = true;
-        hasFailedAt99 = false;
         scanProgress = 0;
         phraseIndex = 0;
 
         // Reset visual styles & activate scanning
-        scannerPad.classList.remove("scanner-error");
+        scannerPad.classList.remove("scanner-error", "scanner-success");
         scannerPad.classList.add("scanning-active");
-        progressFill.classList.remove("error");
-        progressPercent.classList.remove("error");
+        progressFill.classList.remove("error", "success");
+        progressPercent.classList.remove("error", "success");
         progressFill.style.width = "0%";
         progressPercent.textContent = "0%";
-        scannerStatus.classList.remove("error");
+        scannerStatus.classList.remove("error", "success");
         scannerStatus.textContent = hardwarePhrases[0];
 
         AudioEngine.blip(520, 0.08);
 
-        // Hardware phrases cycle every 800ms
+        // Hardware phrases cycle every 600ms
         phraseTimer = setInterval(() => {
           phraseIndex = (phraseIndex + 1) % hardwarePhrases.length;
-          if (!hasFailedAt99 && scannerStatus) {
+          if (!isBiometricVerified && scannerStatus) {
             scannerStatus.textContent = hardwarePhrases[phraseIndex];
             AudioEngine.blip(560 + phraseIndex * 35, 0.04);
           }
-        }, 800);
+        }, 600);
 
-        // Linear progression over 4.5s (4500ms) to reach exactly 99%
-        // 4500ms / 45ms tick = 100 ticks -> 0.99% each tick
-        const stepIncrement = 0.99;
-        const tickInterval = 45;
+        // Linear progression over ~2.5s (2500ms) to reach exactly 100%
+        const stepIncrement = 1;
+        const tickInterval = 25;
 
         progressTimer = setInterval(() => {
           scanProgress += stepIncrement;
-          if (scanProgress >= 99) {
-            scanProgress = 99;
-            progressFill.style.width = "99%";
-            progressPercent.textContent = "99%";
+          if (scanProgress >= 100) {
+            scanProgress = 100;
+            progressFill.style.width = "100%";
+            progressPercent.textContent = "100%";
 
-            // 3. THE 99% TIMEOUT HALT & REFUSAL MATRIX:
-            // Halt progress loop indefinitely
             clearInterval(progressTimer);
             clearInterval(phraseTimer);
             progressTimer = null;
             phraseTimer = null;
-            hasFailedAt99 = true;
+            isScanning = false;
+            isBiometricVerified = true;
 
-            // Trigger visual error state: warning red blinking border & refusal text
-            scannerPad.classList.remove("scanning-active");
-            scannerPad.classList.add("scanner-error");
-            progressFill.classList.add("error");
-            progressPercent.classList.add("error");
-            scannerStatus.classList.add("error");
-            scannerStatus.textContent = "VERIFICATION FAILURE: Scan blurry. Sub-surface micro-textures obscured by layer of physical screen debris. Please thoroughly clean your monitor or glass surface with a damp cloth and try again.";
+            // Success visual state
+            scannerPad.classList.remove("scanning-active", "scanner-error");
+            scannerPad.classList.add("scanner-success");
+            progressFill.classList.remove("error");
+            progressFill.classList.add("success");
+            progressPercent.classList.remove("error");
+            progressPercent.classList.add("success");
+            scannerStatus.classList.remove("error");
+            scannerStatus.classList.add("success");
+            scannerStatus.textContent = "VERIFICATION COMPLETE: Biometric thumbprint authenticated (100%).";
 
-            AudioEngine.blip(160, 0.35);
+            AudioEngine.blip(880, 0.15);
+            setTimeout(() => AudioEngine.blip(1200, 0.25), 140);
           } else {
             const rounded = Math.floor(scanProgress);
-            progressFill.style.width = `${scanProgress.toFixed(1)}%`;
+            progressFill.style.width = `${scanProgress}%`;
             progressPercent.textContent = `${rounded}%`;
           }
         }, tickInterval);
       }
 
       function stopScan(e) {
-        if (!isScanning) return;
-        isScanning = false;
-
-        if (progressTimer) {
-          clearInterval(progressTimer);
-          progressTimer = null;
-        }
-        if (phraseTimer) {
-          clearInterval(phraseTimer);
-          phraseTimer = null;
-        }
-
-        scannerPad.classList.remove("scanning-active");
-
-        // 4. RELEASE INTERRUPTION:
-        // If user releases mouse or breaks touch before 99% mark:
-        if (!hasFailedAt99) {
-          scanProgress = 0;
-          progressFill.style.width = "0%";
-          progressPercent.textContent = "0%";
-          scannerStatus.classList.remove("error");
-          scannerStatus.textContent = "Status: Connection severed. Re-align thumb contact point.";
-          AudioEngine.blip(220, 0.12);
-        }
+        // If already verified, do nothing
+        if (isBiometricVerified) return;
       }
 
       scannerPad.addEventListener("mousedown", startScan);
       scannerPad.addEventListener("touchstart", startScan, { passive: false });
+      scannerPad.addEventListener("click", startScan);
 
       const onWindowMouseUp = (e) => {
         if (isScanning) stopScan(e);
@@ -4985,26 +4992,25 @@
 
       const nextBtn = win.querySelector("#btn-next-step");
       nextBtn.addEventListener("click", () => {
-        // Enforce Terms & Conditions Captcha Maze completion before proceeding
-        if (!termsVerified) {
+        if (!isBiometricVerified) {
           AudioEngine.blip(180, 0.3);
-          termsWrapperRow.classList.add("modal-breach-flash");
-          setTimeout(() => termsWrapperRow.classList.remove("modal-breach-flash"), 1200);
+          scannerStatus.classList.add("error");
+          scannerStatus.textContent = "BIOMETRIC GATE LOCKED: Hardware thumbprint verification must achieve 100% authorization.";
+          scannerPad.classList.add("scanner-error");
+          setTimeout(() => {
+            if (!isBiometricVerified) {
+              scannerPad.classList.remove("scanner-error");
+              scannerStatus.classList.remove("error");
+              scannerStatus.textContent = "Status: Waiting for primary thumb alignment...";
+            }
+          }, 1600);
           return;
         }
 
-        // Biometric verification gate: block authorization
-        AudioEngine.blip(180, 0.3);
-        scannerStatus.classList.add("error");
-        scannerStatus.textContent = "BIOMETRIC GATE LOCKED: Hardware thumbprint verification must achieve 100% authorization.";
-        scannerPad.classList.add("scanner-error");
-        setTimeout(() => {
-          if (!hasFailedAt99) {
-            scannerPad.classList.remove("scanner-error");
-            scannerStatus.classList.remove("error");
-            scannerStatus.textContent = "Status: Waiting for primary thumb alignment...";
-          }
-        }, 1600);
+        // Biometric verified (100%): proceed directly to Purchase Successful
+        AudioEngine.blip(1400);
+        checkoutStep = 3;
+        renderCheckoutWindow();
       });
     }
 
@@ -5035,7 +5041,7 @@
 
         const grad = ctx.createLinearGradient(0, 0, 240, 140);
         grad.addColorStop(0, ["#0a0f1d", "#1f041e", "#021c1e", "#1b1902"][i]);
-        grad.addColorStop(1, ["#341b3d", "#083b40", "#2b0a1a", "#070b14"][i]);
+        grad.addColorStop(1, ["#341d3d", "#083b40", "#2b0a1a", "#070b14"][i]);
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, 240, 140);
 
@@ -5073,7 +5079,8 @@
       win.innerHTML = `
         <div class="order-success-screen">
           <div style="font-size: 54px; margin-bottom: 10px;">🎉</div>
-          <h1>PURCHASE CONFIRMED!</h1>
+          <h1>PURCHASE SUCCESSFUL!</h1>
+          <div style="font-size: 16px; color: #00ff66; font-weight: 800; margin-bottom: 12px; letter-spacing: 1px;">ORDER CONFIRMED</div>
           <p style="color: #cfd8f0; font-size: 14px; line-height: 1.5;">
             Your misbehaving items and non-refundable packaging surcharge have been confirmed.
             Our carrier pigeons are currently declining responsibility.
